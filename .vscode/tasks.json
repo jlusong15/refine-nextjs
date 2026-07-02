@@ -1,0 +1,29 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "nextjs-dev",
+			"type": "npm",
+			"script": "dev",
+			"isBackground": true,
+			"problemMatcher": {
+				"owner": "nextjs",
+				"severity": "info",
+				"pattern": {
+					"regexp": ".*",
+					"message": 0
+				},
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": ".*",
+					"endsPattern": "Ready in|started server"
+				}
+			}
+		},
+		{
+			"label": "kill-terminal",
+			"type": "process",
+			"command": "${command:workbench.action.terminal.kill}"
+		}
+	]
+}
