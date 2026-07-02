@@ -136,6 +136,10 @@ export default function ApplicantDetailsPage() {
 								/>
 								<DetailsRow label="Skills" value={applicant.skills?.length ? applicant.skills.join(", ") : "-"} />
 								<DetailsRow label="Notes" value={applicant.notes} />
+								<DetailsRow
+									label="Created At"
+									value={applicant.createdAt ? formatDateTime(applicant.createdAt) : "-"}
+								/>
 							</TableBody>
 						</Table>
 					</CardContent>
@@ -162,6 +166,10 @@ export default function ApplicantDetailsPage() {
 											<DetailsRow
 												label="Interview Date"
 												value={interview.interviewDate ? formatDateTime(interview.interviewDate) : "-"}
+											/>
+											<DetailsRow
+												label="Created At"
+												value={interview.createdAt ? formatDateTime(interview.createdAt) : "-"}
 											/>
 										</TableBody>
 									</Table>
