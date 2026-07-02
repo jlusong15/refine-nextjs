@@ -1,5 +1,6 @@
 "use client"
 
+import DatePicker from "@/components/shared/DatePicker"
 import { InputMultiComboBox } from "@/components/shared/InputComboBox"
 import MiniLoader from "@/components/shared/MiniLoader"
 import { Button } from "@/components/ui/button"
@@ -148,27 +149,7 @@ export function CreateApplicantForm({ defaultValues, onSubmit, isLoading, cancel
 					render={({ field }) => (
 						<FormItem className="flex flex-col">
 							<FormLabel>Available Start Date</FormLabel>
-
-							<Popover>
-								<PopoverTrigger asChild>
-									<FormControl>
-										<Button
-											type="button"
-											variant="outline"
-											className={cn("justify-start text-left font-normal", !field.value && "text-muted-foreground")}
-										>
-											<CalendarIcon className="mr-2 h-4 w-4" />
-
-											{field.value ? format(field.value, "PPP") : "Pick a date"}
-										</Button>
-									</FormControl>
-								</PopoverTrigger>
-
-								<PopoverContent className="w-auto p-0" align="start">
-									<Calendar mode="single" selected={field.value} defaultMonth={field.value} onSelect={field.onChange} />
-								</PopoverContent>
-							</Popover>
-
+							<DatePicker value={field.value} onChange={field.onChange} disabled={isLoading} />
 							<FormMessage />
 						</FormItem>
 					)}

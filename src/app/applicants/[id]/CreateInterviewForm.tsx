@@ -1,5 +1,6 @@
 "use client"
 
+import DateTimePicker from "@/components/shared/DateTimePicker"
 import MiniLoader from "@/components/shared/MiniLoader"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
@@ -75,29 +76,11 @@ export function CreateInterviewForm({ defaultValues, onSubmit, isLoading, cancel
 					control={form.control}
 					name="interviewDate"
 					render={({ field }) => (
-						<FormItem className="flex flex-col">
+						<FormItem>
 							<FormLabel>Interview Date</FormLabel>
-
-							<Popover>
-								<PopoverTrigger asChild>
-									<FormControl>
-										<Button
-											type="button"
-											variant="outline"
-											className={cn("justify-start text-left font-normal", !field.value && "text-muted-foreground")}
-										>
-											<CalendarIcon className="mr-2 h-4 w-4" />
-
-											{field.value ? format(field.value, "PPP") : "Pick a date"}
-										</Button>
-									</FormControl>
-								</PopoverTrigger>
-
-								<PopoverContent className="w-auto p-0" align="start">
-									<Calendar mode="single" selected={field.value} defaultMonth={field.value} onSelect={field.onChange} />
-								</PopoverContent>
-							</Popover>
-
+							<FormControl>
+								<DateTimePicker value={field.value} onChange={field.onChange} disabled={isLoading} />
+							</FormControl>
 							<FormMessage />
 						</FormItem>
 					)}
