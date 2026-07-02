@@ -213,9 +213,9 @@ export function EditApplicantForm({ defaultValues, cancelAction, onSubmit, isLoa
 
 				<div className="flex gap-2 items-center">
 					{cancelAction && (
-						<LinkButton disabled={isLoading} href="/applicants" variant="outline" onClick={cancelAction}>
+						<Button type="button" disabled={isLoading} variant="outline" onClick={cancelAction}>
 							Cancel
-						</LinkButton>
+						</Button>
 					)}
 					<Button type="submit" disabled={isLoading}>
 						Save Changes

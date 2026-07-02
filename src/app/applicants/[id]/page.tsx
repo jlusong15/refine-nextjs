@@ -13,14 +13,16 @@ import { Table, TableBody } from "@/components/ui/table"
 import { formatCurrency, formatDateTime } from "@/lib/format"
 import { Applicant } from "@/types/applicants.types"
 import { useDelete, useShow } from "@refinedev/core"
-import { ChevronLeft, Pencil, Trash2 } from "lucide-react"
+import { CalendarPlus, ChevronLeft, Pencil, Trash2 } from "lucide-react"
 import { useParams, useRouter } from "next/navigation"
 import { useState } from "react"
 import { toast } from "sonner"
+import CreateInterviewDialog from "./CreateInterviewDialog"
 
 export default function ApplicantDetailsPage() {
 	const router = useRouter()
 	const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
+	const [isInterviewDialogOpen, setIsInterviewDialogOpen] = useState(false)
 	const params = useParams()
 	const id = params.id as string
 	const { query } = useShow<Applicant>({
@@ -75,8 +77,12 @@ export default function ApplicantDetailsPage() {
 				</div>
 				<div className="flex gap-1 items-center">
 					{isDeleting && <MiniLoader />}
+					<Button disabled={isDeleting} onClick={() => setIsInterviewDialogOpen(true)}>
+						<CalendarPlus />
+						Schedule Interview
+					</Button>
 					<LinkButton href={`/applicants/edit/${applicant.documentId}`} disabled={isDeleting}>
-						<Pencil /> Edit
+						<Pencil /> Edit Applicant
 					</LinkButton>
 					<Button variant="destructive" onClick={() => handleDelete()} disabled={isDeleting}>
 						<Trash2 /> Delete
@@ -111,6 +117,12 @@ export default function ApplicantDetailsPage() {
 					</Table>
 				</CardContent>
 			</Card>
+
+			<CreateInterviewDialog
+				open={isInterviewDialogOpen}
+				onOpenChange={setIsInterviewDialogOpen}
+				applicantId={applicant.documentId}
+			/>
 
 			<DeleteConfirmationDialog
 				open={isDeleteDialogOpen}

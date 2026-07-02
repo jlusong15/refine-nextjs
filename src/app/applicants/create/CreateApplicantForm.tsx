@@ -1,7 +1,6 @@
 "use client"
 
 import { InputMultiComboBox } from "@/components/shared/InputComboBox"
-import LinkButton from "@/components/shared/LinkButton"
 import MiniLoader from "@/components/shared/MiniLoader"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
@@ -213,9 +212,9 @@ export function CreateApplicantForm({ defaultValues, onSubmit, isLoading, cancel
 
 				<div className="flex gap-2 items-center">
 					{cancelAction && (
-						<LinkButton disabled={isLoading} href="/applicants" variant="outline" onClick={cancelAction}>
+						<Button type="button" disabled={isLoading} variant="outline" onClick={cancelAction}>
 							Cancel
-						</LinkButton>
+						</Button>
 					)}
 					<Button type="submit" disabled={isLoading}>
 						Save Changes

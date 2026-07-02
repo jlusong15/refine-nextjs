@@ -1,7 +1,8 @@
-import Link, { type LinkProps } from "next/link"
+"use client"
 
-import { cn } from "@/lib/utils"
-import { buttonVariants } from "@/components/ui/button"
+import { useRouter } from "next/navigation"
+import type { LinkProps } from "next/link"
+import { Button } from "@/components/ui/button"
 
 type Props = {
 	href: LinkProps["href"]
@@ -10,6 +11,7 @@ type Props = {
 	variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link"
 	size?: "default" | "sm" | "lg" | "icon"
 	disabled?: boolean
+	onClick?: React.MouseEventHandler<HTMLButtonElement>
 }
 
 export default function LinkButton({
@@ -20,26 +22,25 @@ export default function LinkButton({
 	size = "default",
 	disabled = false,
 	onClick,
-	...props
-}: Props & Omit<LinkProps, "href">) {
-	if (!href) return null
+}: Props) {
+	const router = useRouter()
 
 	return (
-		<Link
-			{...props}
-			href={disabled ? "#" : href}
-			aria-disabled={disabled}
-			tabIndex={disabled ? -1 : undefined}
+		<Button
+			type="button"
+			variant={variant}
+			size={size}
+			className={className}
+			disabled={disabled}
 			onClick={(e) => {
-				if (disabled) {
-					e.preventDefault()
-					return
-				}
 				onClick?.(e)
+
+				if (e.defaultPrevented || disabled) return
+
+				router.push(href.toString())
 			}}
-			className={cn(buttonVariants({ variant, size }), disabled && "pointer-events-none opacity-50", className)}
 		>
 			{children}
-		</Link>
+		</Button>
 	)
 }

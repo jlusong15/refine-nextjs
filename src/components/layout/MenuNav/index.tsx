@@ -1,5 +1,6 @@
 "use client"
 
+import LinkButton from "@/components/shared/LinkButton"
 import { NavLinks } from "@/types/nav.types"
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/react"
 import { Menu as MenuIcon, X } from "lucide-react"
@@ -36,7 +37,7 @@ export default function MenuNav() {
 									const isActive = pathname === item.route
 
 									return (
-										<Link
+										<LinkButton
 											key={item.name}
 											href={item.route}
 											className={classNames(
@@ -45,7 +46,7 @@ export default function MenuNav() {
 											)}
 										>
 											{item.name}
-										</Link>
+										</LinkButton>
 									)
 								})}
 							</div>
