@@ -1,11 +1,5 @@
+import { Interview } from "./interview.types";
 import { BaseEntity } from "./strapi.types";
-
-export interface Interview extends BaseEntity {
-	role: string;
-	description?: string;
-	interviewDate: string;
-	interviewerName: string;
-}
 
 export interface Applicant extends BaseEntity {
 	fullName: string;

@@ -12,7 +12,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Table, TableBody } from "@/components/ui/table"
 import { formatCurrency, formatDateTime } from "@/lib/format"
 import { Applicant } from "@/types/applicants.types"
-import { useDelete, useShow } from "@refinedev/core"
+import { useDelete, useList, useShow } from "@refinedev/core"
 import { CalendarPlus, ChevronLeft, Pencil, Trash2 } from "lucide-react"
 import { useParams, useRouter } from "next/navigation"
 import { useState } from "react"
@@ -29,6 +29,17 @@ export default function ApplicantDetailsPage() {
 		resource: "applicants",
 		id,
 	})
+	const { result: resultQuery, query: interviewsQuery } = useList({
+		resource: "interviews",
+		filters: [
+			{
+				field: "applicant.documentId",
+				operator: "eq",
+				value: id,
+			},
+		],
+	})
+	const { isLoading: interviewsLoading, isRefetching: interviewsRefetching } = interviewsQuery
 	const {
 		mutate: deleteApplicant,
 		mutation: { isPending: isDeleting },
@@ -41,6 +52,7 @@ export default function ApplicantDetailsPage() {
 	}
 
 	const applicant = data.data
+	const interviews = resultQuery.data
 
 	const handleDelete = () => {
 		if (!isDeleteDialogOpen) {
@@ -124,11 +136,31 @@ export default function ApplicantDetailsPage() {
 					<CardHeader>
 						<CardTitle className="text-primary text-xl">Interview Details</CardTitle>
 					</CardHeader>
-
 					<CardContent>
-						<Table>
-							<TableBody></TableBody>
-						</Table>
+						{interviewsLoading || interviewsRefetching ? (
+							<MiniLoader />
+						) : interviews?.length > 0 ? (
+							interviews?.map((interview) => (
+								<>
+									<span key={"id_" + interview.documentId} className="font-semibold m-2 flex text-muted-foreground">
+										ID: {interview.documentId}
+									</span>
+									<Table key={interview.documentId} className="mb-5">
+										<TableBody>
+											<DetailsRow label="Role" value={interview.role} />
+											<DetailsRow label="Interviewer Name" value={interview.interviewerName} />
+											<DetailsRow label="Description" value={interview.description} />
+											<DetailsRow
+												label="Interview Date"
+												value={interview.interviewDate ? formatDateTime(interview.interviewDate) : "-"}
+											/>
+										</TableBody>
+									</Table>
+								</>
+							))
+						) : (
+							<p className="text-muted-foreground">No interviews scheduled.</p>
+						)}
 					</CardContent>
 				</Card>
 			</div>
