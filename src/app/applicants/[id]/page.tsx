@@ -81,23 +81,32 @@ export default function ApplicantDetailsPage() {
 
 	return (
 		<DefaultPageLayout title={applicant.fullName}>
-			<div className="flex mb-4 justify-between">
-				<div>
-					<LinkButton href="/applicants" variant="outline" className="pl-1 pr-2" disabled={isDeleting}>
-						<ChevronLeft /> Back to List
-					</LinkButton>
-				</div>
-				<div className="flex gap-1 items-center">
+			<div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+				<LinkButton href="/applicants" variant="outline" className="pl-1 pr-2 w-full sm:w-auto" disabled={isDeleting}>
+					<ChevronLeft />
+					Back to List
+				</LinkButton>
+
+				<div className="flex flex-col gap-2 sm:flex-row sm:items-center">
 					{isDeleting && <MiniLoader />}
-					<Button disabled={isDeleting} onClick={() => setIsInterviewDialogOpen(true)}>
+
+					<Button className="w-full sm:w-auto" disabled={isDeleting} onClick={() => setIsInterviewDialogOpen(true)}>
 						<CalendarPlus />
 						Schedule Interview
 					</Button>
-					<LinkButton href={`/applicants/edit/${applicant.documentId}`} disabled={isDeleting}>
-						<Pencil /> Edit Applicant
+
+					<LinkButton
+						href={`/applicants/edit/${applicant.documentId}`}
+						className="w-full sm:w-auto"
+						disabled={isDeleting}
+					>
+						<Pencil />
+						Edit Applicant
 					</LinkButton>
-					<Button variant="destructive" onClick={() => handleDelete()} disabled={isDeleting}>
-						<Trash2 /> Delete
+
+					<Button variant="destructive" className="w-full sm:w-auto" onClick={handleDelete} disabled={isDeleting}>
+						<Trash2 />
+						Delete
 					</Button>
 				</div>
 			</div>
@@ -134,7 +143,7 @@ export default function ApplicantDetailsPage() {
 
 				<Card>
 					<CardHeader>
-						<CardTitle className="text-primary text-xl">Interview Details</CardTitle>
+						<CardTitle className="text-primary text-xl">Scheduled Interviews</CardTitle>
 					</CardHeader>
 					<CardContent>
 						{interviewsLoading || interviewsRefetching ? (
