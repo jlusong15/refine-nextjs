@@ -28,9 +28,9 @@ export default function RootLayout({
 		<html lang="en" className={cn(dmSans.variable, "font-sans", geist.variable)}>
 			<body className="font-sans antialiased">
 				<div>
-					<MenuNav />
 					<main>
 						<Providers>
+							<MenuNav />
 							{children}
 							<Toaster />
 						</Providers>

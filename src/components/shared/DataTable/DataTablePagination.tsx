@@ -38,7 +38,7 @@ export function DataTablePagination({
 
 			<div>
 				<Select value={pageSize.toString()} onValueChange={(value) => setPageSize(Number(value))} disabled={isLoading}>
-					<SelectTrigger className="w-20">
+					<SelectTrigger className="w-20 cursor-pointer">
 						<SelectValue />
 					</SelectTrigger>
 

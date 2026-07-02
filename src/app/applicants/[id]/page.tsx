@@ -32,6 +32,14 @@ export default function ApplicantDetailsPage() {
 	})
 	const { result: resultQuery, query: interviewsQuery } = useList({
 		resource: "interviews",
+		// meta: {
+		// 	query: {
+		// 		applicantId: id,
+		// 	},
+		// },
+		pagination: {
+			mode: "off",
+		},
 		filters: [
 			{
 				field: "applicant.documentId",
