@@ -2,21 +2,17 @@
 
 import DatePicker from "@/components/shared/DatePicker"
 import { InputMultiComboBox } from "@/components/shared/InputComboBox"
-import LinkButton from "@/components/shared/LinkButton"
+import { InputNumber } from "@/components/shared/InputNumber"
 import MiniLoader from "@/components/shared/MiniLoader"
+import { SelectField } from "@/components/shared/SelectField"
 import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
-import { cn } from "@/lib/utils"
 import { ApplicantFormValues, applicantSchema } from "@/schemas/applicant.schema"
 import { APPLICANT_STATUS } from "@/types/applicants.types"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { format } from "date-fns"
-import { CalendarIcon } from "lucide-react"
 import { SubmitHandler, useForm } from "react-hook-form"
 
 interface EditApplicantFormProps {
@@ -31,6 +27,10 @@ export function EditApplicantForm({ defaultValues, cancelAction, onSubmit, isLoa
 		resolver: zodResolver(applicantSchema),
 		defaultValues,
 	})
+	const applicantStatusOptions = Object.values(APPLICANT_STATUS).map((status) => ({
+		label: status,
+		value: status,
+	}))
 
 	return (
 		<Form {...form}>
@@ -97,20 +97,12 @@ export function EditApplicantForm({ defaultValues, cancelAction, onSubmit, isLoa
 					render={({ field }) => (
 						<FormItem>
 							<FormLabel>Status</FormLabel>
-							<Select onValueChange={field.onChange} value={field.value}>
-								<FormControl>
-									<SelectTrigger className="w-full">
-										<SelectValue placeholder="Select application status" />
-									</SelectTrigger>
-								</FormControl>
-								<SelectContent>
-									{Object.values(APPLICANT_STATUS).map((status) => (
-										<SelectItem key={status} value={status}>
-											{status}
-										</SelectItem>
-									))}
-								</SelectContent>
-							</Select>
+							<SelectField
+								value={field.value}
+								onValueChange={field.onChange}
+								placeholder="Select application status"
+								options={applicantStatusOptions}
+							/>
 							<FormMessage />
 						</FormItem>
 					)}
@@ -123,7 +115,7 @@ export function EditApplicantForm({ defaultValues, cancelAction, onSubmit, isLoa
 						<FormItem>
 							<FormLabel>Years of Experience</FormLabel>
 							<FormControl>
-								<Input type="number" {...field} />
+								<InputNumber value={field?.value ?? null} onChange={field.onChange} />
 							</FormControl>
 							<FormMessage />
 						</FormItem>

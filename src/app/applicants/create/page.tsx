@@ -1,10 +1,10 @@
 "use client"
 
 import DefaultPageLayout from "@/components/layout/DefaulPageLayout"
+import { APPLICANT_STATUS } from "@/types/applicants.types"
 import { useCreate } from "@refinedev/core"
 import { useRouter } from "next/navigation"
 import { CreateApplicantForm } from "./CreateApplicantForm"
-import { APPLICANT_STATUS } from "@/types/applicants.types"
 
 export default function ApplicantCreatePage() {
 	const router = useRouter()
@@ -24,8 +24,8 @@ export default function ApplicantCreatePage() {
 					phone: "",
 					appliedRole: "",
 					applicationStatus: APPLICANT_STATUS.NEW,
-					yearsOfExperience: 0,
-					expectedSalary: 0,
+					yearsOfExperience: undefined,
+					expectedSalary: undefined,
 					availableStartDate: undefined,
 					skills: [],
 					notes: "",
