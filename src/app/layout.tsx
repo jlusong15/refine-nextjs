@@ -29,7 +29,7 @@ export default function RootLayout({
 			<body className="font-sans antialiased">
 				<div>
 					<MenuNav />
-					<main className="px-5 py-2">
+					<main>
 						<Providers>
 							{children}
 							<Toaster />

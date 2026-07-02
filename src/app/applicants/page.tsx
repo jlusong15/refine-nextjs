@@ -1,10 +1,9 @@
-import PageHeader from "@/components/layout/PageHeader";
+import DefaultPageLayout from "@/components/layout/DefaulPageLayout"
 
 export default function ApplicantsPage() {
 	return (
-		<div>
-			<PageHeader title="Applicants" />
+		<DefaultPageLayout title="Applicants">
 			<p className="mt-4 text-lg text-gray-600">Manage your applicants here.</p>
-		</div>
+		</DefaultPageLayout>
 	)
 }
