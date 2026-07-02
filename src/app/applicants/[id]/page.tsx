@@ -68,7 +68,7 @@ export default function ApplicantDetailsPage() {
 	}
 
 	return (
-		<DefaultPageLayout title="Applicant Details">
+		<DefaultPageLayout title={applicant.fullName}>
 			<div className="flex mb-4 justify-between">
 				<div>
 					<LinkButton href="/applicants" variant="outline" className="pl-1 pr-2" disabled={isDeleting}>
@@ -89,34 +89,49 @@ export default function ApplicantDetailsPage() {
 					</Button>
 				</div>
 			</div>
-			<Card>
-				<CardHeader>
-					<CardTitle className="text-primary text-xl">{applicant.fullName}</CardTitle>
-				</CardHeader>
 
-				<CardContent>
-					<Table>
-						<TableBody>
-							<DetailsRow label="ID" value={applicant.documentId} />
-							<DetailsRow label="Full Name" value={applicant.fullName} />
-							<DetailsRow label="Email" value={applicant.email} />
-							<DetailsRow label="Phone" value={applicant.phone} />
-							<DetailsRow label="Applied Role" value={applicant.appliedRole} />
-							<DetailsRow label="Status" value={applicant.applicationStatus} />
-							<DetailsRow
-								label="Expected Salary"
-								value={applicant.expectedSalary ? formatCurrency(applicant.expectedSalary) : "-"}
-							/>
-							<DetailsRow
-								label="Available Start Date"
-								value={applicant.availableStartDate ? formatDateTime(applicant.availableStartDate) : "-"}
-							/>
-							<DetailsRow label="Skills" value={applicant.skills?.length ? applicant.skills.join(", ") : "-"} />
-							<DetailsRow label="Notes" value={applicant.notes} />
-						</TableBody>
-					</Table>
-				</CardContent>
-			</Card>
+			<div className="flex flex-col gap-4">
+				<Card>
+					<CardHeader>
+						<CardTitle className="text-primary text-xl">Applicant Details</CardTitle>
+					</CardHeader>
+
+					<CardContent>
+						<Table>
+							<TableBody>
+								<DetailsRow label="ID" value={applicant.documentId} />
+								<DetailsRow label="Full Name" value={applicant.fullName} />
+								<DetailsRow label="Email" value={applicant.email} />
+								<DetailsRow label="Phone" value={applicant.phone} />
+								<DetailsRow label="Applied Role" value={applicant.appliedRole} />
+								<DetailsRow label="Status" value={applicant.applicationStatus} />
+								<DetailsRow
+									label="Expected Salary"
+									value={applicant.expectedSalary ? formatCurrency(applicant.expectedSalary) : "-"}
+								/>
+								<DetailsRow
+									label="Available Start Date"
+									value={applicant.availableStartDate ? formatDateTime(applicant.availableStartDate) : "-"}
+								/>
+								<DetailsRow label="Skills" value={applicant.skills?.length ? applicant.skills.join(", ") : "-"} />
+								<DetailsRow label="Notes" value={applicant.notes} />
+							</TableBody>
+						</Table>
+					</CardContent>
+				</Card>
+
+				<Card>
+					<CardHeader>
+						<CardTitle className="text-primary text-xl">Interview Details</CardTitle>
+					</CardHeader>
+
+					<CardContent>
+						<Table>
+							<TableBody></TableBody>
+						</Table>
+					</CardContent>
+				</Card>
+			</div>
 
 			<CreateInterviewDialog
 				open={isInterviewDialogOpen}
