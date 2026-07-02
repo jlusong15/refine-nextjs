@@ -31,7 +31,7 @@ export function DataTable<T extends { id: number | string }>({
 }: DataTableProps<T>) {
 	return (
 		<div className="w-full overflow-x-auto rounded-md border">
-			<Table className={cn("min-w-max text-base", isLoading && "pointer-events-none opacity-60")}>
+			<Table className={cn("min-w-max", isLoading && "pointer-events-none opacity-60")}>
 				<TableHeader className="bg-muted">
 					<TableRow>
 						{columns.map((column) => (
@@ -39,7 +39,7 @@ export function DataTable<T extends { id: number | string }>({
 								{column.sortable ? (
 									<Button
 										variant="ghost"
-										className="h-auto p-0 text-base"
+										className="h-auto p-0"
 										disabled={isLoading}
 										onClick={() => onSort?.(column.key)}
 									>

@@ -3,12 +3,15 @@
 import DefaultPageLayout from "@/components/layout/DefaulPageLayout"
 import ErrorPage from "@/components/layout/ErrorPage"
 import DetailsRow from "@/components/shared/DetailsRow"
+import LinkButton from "@/components/shared/LinkButton"
 import Loading from "@/components/shared/Loading"
+import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Table, TableBody } from "@/components/ui/table"
 import { formatCurrency, formatDateTime } from "@/lib/format"
 import { Applicant } from "@/types/applicants.types"
 import { useShow } from "@refinedev/core"
+import { ChevronLeft, Pencil, Trash2 } from "lucide-react"
 import { useParams } from "next/navigation"
 
 export default function ApplicantDetailsPage() {
@@ -29,6 +32,18 @@ export default function ApplicantDetailsPage() {
 
 	return (
 		<DefaultPageLayout title="Applicant Details">
+			<div className="flex gap-0.5 mb-4 justify-end">
+				<LinkButton href={`/applicants/edit/${applicant.documentId}`}>
+					<Pencil /> Edit
+				</LinkButton>
+				{/* @@TODO: Add delete functionality */}
+				<Button>
+					<Trash2 /> Delete
+				</Button>
+				<LinkButton href="/applicants" variant="outline" className="pl-1 pr-2">
+					<ChevronLeft /> Back to List
+				</LinkButton>
+			</div>
 			<Card>
 				<CardHeader>
 					<CardTitle className="text-primary text-xl">{applicant.fullName}</CardTitle>

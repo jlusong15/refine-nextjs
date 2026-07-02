@@ -27,7 +27,7 @@ export function DataTablePagination({
 					Previous
 				</Button>
 
-				<span className="text-base">
+				<span className="text-sm font-medium">
 					Page {currentPage} of {pageCount}
 				</span>
 

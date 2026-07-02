@@ -30,12 +30,12 @@ export default function ApplicantEditPage() {
 	}
 
 	const applicant = query.data.data
-	console.log("applicant", applicant)
-	
+
 	return (
 		<DefaultPageLayout title="Edit Applicant">
 			<EditApplicantForm
 				isLoading={isPending}
+				cancelAction={() => router.push(`/applicants/edit/${applicant?.documentId}`)}
 				defaultValues={{
 					fullName: applicant.fullName,
 					email: applicant.email,

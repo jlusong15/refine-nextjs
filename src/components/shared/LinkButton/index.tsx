@@ -9,6 +9,7 @@ type Props = {
 	className?: string
 	variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link"
 	size?: "default" | "sm" | "lg" | "icon"
+	disabled?: boolean
 }
 
 export default function LinkButton({
@@ -17,6 +18,8 @@ export default function LinkButton({
 	className,
 	variant = "default",
 	size = "default",
+	disabled = false,
+	onClick,
 	...props
 }: Props & Omit<LinkProps, "href">) {
 	if (!href) return null
@@ -24,11 +27,17 @@ export default function LinkButton({
 	return (
 		<Link
 			{...props}
-			href={href}
-			className={cn(
-				buttonVariants({ variant, size }),
-				className,
-			)}
+			href={disabled ? "#" : href}
+			aria-disabled={disabled}
+			tabIndex={disabled ? -1 : undefined}
+			onClick={(e) => {
+				if (disabled) {
+					e.preventDefault()
+					return
+				}
+				onClick?.(e)
+			}}
+			className={cn(buttonVariants({ variant, size }), disabled && "pointer-events-none opacity-50", className)}
 		>
 			{children}
 		</Link>

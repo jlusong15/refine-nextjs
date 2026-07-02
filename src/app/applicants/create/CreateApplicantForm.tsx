@@ -18,14 +18,14 @@ import { format } from "date-fns"
 import { CalendarIcon } from "lucide-react"
 import { SubmitHandler, useForm } from "react-hook-form"
 
-interface EditApplicantFormProps {
+interface CreateApplicantFormProps {
 	defaultValues: ApplicantFormValues
 	onSubmit: SubmitHandler<ApplicantFormValues>
 	isLoading?: boolean
 	cancelAction?: () => void
 }
 
-export function EditApplicantForm({ defaultValues, cancelAction, onSubmit, isLoading }: EditApplicantFormProps) {
+export function CreateApplicantForm({ defaultValues, onSubmit, isLoading, cancelAction }: CreateApplicantFormProps) {
 	const form = useForm<ApplicantFormValues>({
 		resolver: zodResolver(applicantSchema),
 		defaultValues,

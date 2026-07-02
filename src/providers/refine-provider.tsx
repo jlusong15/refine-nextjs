@@ -11,7 +11,7 @@ export default function RefineProvider({ children }: { children: React.ReactNode
 	return (
 		<Refine
 			routerProvider={routerProvider}
-			dataProvider={DataProvider(API_URL, axiosInstance)}
+			dataProvider={DataProvider(API_URL)}
 			resources={[
 				{
 					name: "applicants",

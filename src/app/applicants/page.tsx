@@ -12,7 +12,7 @@ import { applicantTableColumns } from "./columns"
 import ErrorPage from "@/components/layout/ErrorPage"
 import MiniLoader from "@/components/shared/MiniLoader"
 import { Button } from "@/components/ui/button"
-import { Eye, Link, Pencil, Trash2 } from "lucide-react"
+import { Eye, Link, Pencil, Plus, Trash2 } from "lucide-react"
 import LinkButton from "@/components/shared/LinkButton"
 
 export default function ApplicantsPage() {
@@ -92,10 +92,17 @@ export default function ApplicantsPage() {
 	return (
 		<DefaultPageLayout title={pageName}>
 			<div className="space-y-4">
-				<div className="relative w-full justify-end flex items-center">
-					<div className="flex items-center gap-2">
+				<div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+					<LinkButton href="/applicants/create" className="w-full sm:w-auto">
+						<Plus className="h-4 w-4" />
+						Create Applicant
+					</LinkButton>
+
+					<div className="flex w-full items-center gap-2 sm:w-auto">
 						{(isFetching || isRefetching) && <MiniLoader />}
+
 						<DataTableSearch
+							className="w-full sm:w-80"
 							value={search}
 							onChange={handleSearch}
 							placeholder="Search applicant name..."
