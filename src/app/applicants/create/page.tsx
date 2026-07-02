@@ -1,17 +1,17 @@
 "use client"
 
 import DefaultPageLayout from "@/components/layout/DefaulPageLayout"
-import { useUpdate } from "@refinedev/core"
-import { id } from "date-fns/locale/id"
+import { useCreate } from "@refinedev/core"
 import { useRouter } from "next/navigation"
 import { CreateApplicantForm } from "./CreateApplicantForm"
+import { APPLICANT_STATUS } from "@/types/applicants.types"
 
 export default function ApplicantCreatePage() {
 	const router = useRouter()
 	const {
 		mutate,
 		mutation: { isPending },
-	} = useUpdate()
+	} = useCreate()
 
 	return (
 		<DefaultPageLayout title="Create Applicant">
@@ -23,9 +23,9 @@ export default function ApplicantCreatePage() {
 					email: "",
 					phone: "",
 					appliedRole: "",
-					applicationStatus: "",
-					yearsOfExperience: undefined,
-					expectedSalary: undefined,
+					applicationStatus: APPLICANT_STATUS.NEW,
+					yearsOfExperience: 0,
+					expectedSalary: 0,
 					availableStartDate: undefined,
 					skills: [],
 					notes: "",
@@ -41,7 +41,7 @@ export default function ApplicantCreatePage() {
 							invalidates: ["detail"],
 						},
 						{
-							onSuccess: () => router.push(`/applicants/${id}`),
+							onSuccess: () => router.push(`/applicants`),
 						},
 					)
 				}

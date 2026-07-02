@@ -1,22 +1,30 @@
 "use client"
 
 import DefaultPageLayout from "@/components/layout/DefaulPageLayout"
+import ErrorPage from "@/components/layout/ErrorPage"
 import { DataTable } from "@/components/shared/DataTable"
 import { DataTablePagination } from "@/components/shared/DataTable/DataTablePagination"
 import { DataTableSearch } from "@/components/shared/DataTable/DataTableSearch"
+import LinkButton from "@/components/shared/LinkButton"
 import Loading from "@/components/shared/Loading"
-import { Applicant } from "@/types/applicants.types"
-import { useTable } from "@refinedev/core"
-import { useState } from "react"
-import { applicantTableColumns } from "./columns"
-import ErrorPage from "@/components/layout/ErrorPage"
 import MiniLoader from "@/components/shared/MiniLoader"
 import { Button } from "@/components/ui/button"
-import { Eye, Link, Pencil, Plus, Trash2 } from "lucide-react"
-import LinkButton from "@/components/shared/LinkButton"
+import { Applicant } from "@/types/applicants.types"
+import { useDelete, useTable } from "@refinedev/core"
+import { Eye, Pencil, Plus, Trash2 } from "lucide-react"
+import { useState } from "react"
+import { toast } from "sonner"
+import { applicantTableColumns } from "./columns"
+
+import DeleteConfirmationDialog from "@/components/shared/DeleteConfirmationDialog"
 
 export default function ApplicantsPage() {
 	const pageName = "Applicants"
+	const [selectedApplicant, setSelectedApplicant] = useState<Applicant | null>(null)
+	const {
+		mutate: deleteApplicant,
+		mutation: { isPending: isDeleting },
+	} = useDelete()
 	const [search, setSearch] = useState("")
 	const {
 		result,
@@ -74,7 +82,6 @@ export default function ApplicantsPage() {
 		])
 	}
 
-	// @@TODO: Implement delete functionality
 	const actions = (applicant: Applicant) => (
 		<div className="flex justify-end gap-2">
 			<LinkButton href={`/applicants/${applicant.documentId}`} variant="ghost" size="icon">
@@ -83,17 +90,39 @@ export default function ApplicantsPage() {
 			<LinkButton href={`/applicants/edit/${applicant.documentId}`} variant="ghost" size="icon">
 				<Pencil className="h-4 w-4" />
 			</LinkButton>
-			<Button variant="ghost" size="icon" title="Delete">
+			<Button variant="ghost" size="icon" title="Delete" onClick={() => setSelectedApplicant(applicant)}>
 				<Trash2 className="h-4 w-4 text-destructive" />
 			</Button>
 		</div>
 	)
 
+	const handleDelete = () => {
+		if (!selectedApplicant) return
+
+		deleteApplicant(
+			{
+				resource: "applicants",
+				id: selectedApplicant.documentId,
+				invalidates: ["list"],
+			},
+			{
+				onSuccess: () => {
+					toast.success("Applicant deleted successfully.")
+					setSelectedApplicant(null)
+				},
+				onError: () => {
+					toast.error("Failed to delete applicant.")
+					setSelectedApplicant(null)
+				},
+			},
+		)
+	}
+
 	return (
 		<DefaultPageLayout title={pageName}>
 			<div className="space-y-4">
 				<div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-					<LinkButton href="/applicants/create" className="w-full sm:w-auto">
+					<LinkButton href="/applicants/create" className="w-full sm:w-auto" disabled={isFetching || isRefetching}>
 						<Plus className="h-4 w-4" />
 						Create Applicant
 					</LinkButton>
@@ -126,6 +155,23 @@ export default function ApplicantsPage() {
 					isLoading={isFetching || isRefetching}
 					setCurrentPage={setCurrentPage}
 					setPageSize={setPageSize}
+				/>
+
+				<DeleteConfirmationDialog
+					open={!!selectedApplicant}
+					onOpenChange={(open) => {
+						if (!open) setSelectedApplicant(null)
+					}}
+					onConfirm={handleDelete}
+					isLoading={isDeleting}
+					title="Delete Applicant?"
+					description={
+						<>
+							Are you sure you want to delete <strong>{selectedApplicant?.fullName}</strong>?
+							<br />
+							This action cannot be undone.
+						</>
+					}
 				/>
 			</div>
 		</DefaultPageLayout>

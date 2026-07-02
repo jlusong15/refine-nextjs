@@ -6,13 +6,13 @@ export const applicantSchema = z.object({
 	email: z.email("Invalid email address"),
 	phone: z.string().min(1, "Phone is required"),
 	appliedRole: z.string().min(1, "Applied role is required"),
-	yearsOfExperience: z.number().min(0, "Years of experience must be a positive number").optional(),
 	applicationStatus: z.enum(Object.values(APPLICANT_STATUS) as [
 		string,
 		...string[],
 	], {
 		error: "Application status is required",
 	}),
+	yearsOfExperience: z.number().optional(),
 	expectedSalary: z.number().optional(),
 	availableStartDate: z.date().optional(),
 	skills: z.array(z.string()).optional(),

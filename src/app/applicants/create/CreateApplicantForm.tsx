@@ -92,20 +92,6 @@ export function CreateApplicantForm({ defaultValues, onSubmit, isLoading, cancel
 
 				<FormField
 					control={form.control}
-					name="yearsOfExperience"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Years of Experience</FormLabel>
-							<FormControl>
-								<Input type="number" {...field} />
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-
-				<FormField
-					control={form.control}
 					name="applicationStatus"
 					render={({ field }) => (
 						<FormItem>
@@ -124,6 +110,20 @@ export function CreateApplicantForm({ defaultValues, onSubmit, isLoading, cancel
 									))}
 								</SelectContent>
 							</Select>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+
+				<FormField
+					control={form.control}
+					name="yearsOfExperience"
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel>Years of Experience</FormLabel>
+							<FormControl>
+								<Input type="number" {...field} onChange={(e) => field.onChange(Number(e.target.value))} />
+							</FormControl>
 							<FormMessage />
 						</FormItem>
 					)}
@@ -212,14 +212,14 @@ export function CreateApplicantForm({ defaultValues, onSubmit, isLoading, cancel
 				/>
 
 				<div className="flex gap-2 items-center">
-					<Button type="submit" disabled={isLoading}>
-						Save Changes
-					</Button>
 					{cancelAction && (
 						<LinkButton disabled={isLoading} href="/applicants" variant="outline" onClick={cancelAction}>
 							Cancel
 						</LinkButton>
 					)}
+					<Button type="submit" disabled={isLoading}>
+						Save Changes
+					</Button>
 					{isLoading && <MiniLoader />}
 				</div>
 			</form>
