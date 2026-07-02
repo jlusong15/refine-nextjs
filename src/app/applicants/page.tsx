@@ -118,6 +118,11 @@ export default function ApplicantsPage() {
 		)
 	}
 
+	const handlePageSizeChange = (size: number) => {
+		setPageSize(size)
+		setCurrentPage(1)
+	}
+
 	return (
 		<DefaultPageLayout title={pageName}>
 			<div className="space-y-4">
@@ -154,7 +159,7 @@ export default function ApplicantsPage() {
 					pageSize={pageSize}
 					isLoading={isFetching || isRefetching}
 					setCurrentPage={setCurrentPage}
-					setPageSize={setPageSize}
+					setPageSize={handlePageSizeChange}
 				/>
 
 				<DeleteConfirmationDialog
