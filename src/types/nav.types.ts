@@ -7,7 +7,7 @@ export interface NavModel {
 }
 
 export const NavLinks = [
-	{ name: 'Home', route: '/' },
-	{ name: 'Applicans', route: '/applicants' },
+	{ name: 'Dashboard', route: '/' },
+	{ name: 'Applicants', route: '/applicants' },
 	{ name: 'Interviews', icon: Rss, route: '/interviews' },
 ];
