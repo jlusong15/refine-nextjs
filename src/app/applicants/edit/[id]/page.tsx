@@ -35,7 +35,7 @@ export default function ApplicantEditPage() {
 		<DefaultPageLayout title="Edit Applicant">
 			<EditApplicantForm
 				isLoading={isPending}
-				cancelAction={() => router.push(`/applicants/edit/${applicant?.documentId}`)}
+				cancelAction={() => router.push(`/applicants/${applicant?.documentId}`)}
 				defaultValues={{
 					fullName: applicant.fullName,
 					email: applicant.email,
