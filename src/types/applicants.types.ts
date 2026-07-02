@@ -16,7 +16,7 @@ export interface Applicant extends BaseEntity {
 	applicationStatus: ApplicantStatus;
 	expectedSalary?: number;
 	availableStartDate?: string;
-	skills: string[];
+	skills?: string[];
 	notes?: string;
 	interviews?: Interview[];
 }

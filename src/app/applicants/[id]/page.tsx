@@ -5,7 +5,7 @@ import ErrorPage from "@/components/layout/ErrorPage"
 import DetailsRow from "@/components/shared/DetailsRow"
 import Loading from "@/components/shared/Loading"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table"
+import { Table, TableBody } from "@/components/ui/table"
 import { formatCurrency, formatDateTime } from "@/lib/format"
 import { Applicant } from "@/types/applicants.types"
 import { useShow } from "@refinedev/core"
@@ -18,9 +18,9 @@ export default function ApplicantDetailsPage() {
 		resource: "applicants",
 		id,
 	})
-	const { data, isLoading, error } = query
+	const { data, isLoading, isRefetching, error } = query
 
-	if (isLoading) return <Loading />
+	if (isLoading || isRefetching) return <Loading />
 	if (error || !data?.data) {
 		return <ErrorPage title="Applicant Not Found" />
 	}
@@ -36,26 +36,24 @@ export default function ApplicantDetailsPage() {
 
 				<CardContent>
 					<Table>
-						<Table>
-							<TableBody>
-								<DetailsRow label="ID" value={applicant.documentId} />
-								<DetailsRow label="Full Name" value={applicant.fullName} />
-								<DetailsRow label="Email" value={applicant.email} />
-								<DetailsRow label="Phone" value={applicant.phone} />
-								<DetailsRow label="Applied Role" value={applicant.appliedRole} />
-								<DetailsRow label="Status" value={applicant.applicationStatus} />
-								<DetailsRow
-									label="Expected Salary"
-									value={applicant.expectedSalary ? formatCurrency(applicant.expectedSalary) : "-"}
-								/>
-								<DetailsRow
-									label="Available Start Date"
-									value={applicant.availableStartDate ? formatDateTime(applicant.availableStartDate) : "-"}
-								/>
-								<DetailsRow label="Skills" value={applicant.skills?.length ? applicant.skills.join(", ") : "-"} />
-								<DetailsRow label="Notes" value={applicant.notes} />
-							</TableBody>
-						</Table>
+						<TableBody>
+							<DetailsRow label="ID" value={applicant.documentId} />
+							<DetailsRow label="Full Name" value={applicant.fullName} />
+							<DetailsRow label="Email" value={applicant.email} />
+							<DetailsRow label="Phone" value={applicant.phone} />
+							<DetailsRow label="Applied Role" value={applicant.appliedRole} />
+							<DetailsRow label="Status" value={applicant.applicationStatus} />
+							<DetailsRow
+								label="Expected Salary"
+								value={applicant.expectedSalary ? formatCurrency(applicant.expectedSalary) : "-"}
+							/>
+							<DetailsRow
+								label="Available Start Date"
+								value={applicant.availableStartDate ? formatDateTime(applicant.availableStartDate) : "-"}
+							/>
+							<DetailsRow label="Skills" value={applicant.skills?.length ? applicant.skills.join(", ") : "-"} />
+							<DetailsRow label="Notes" value={applicant.notes} />
+						</TableBody>
 					</Table>
 				</CardContent>
 			</Card>

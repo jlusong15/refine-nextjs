@@ -27,7 +27,7 @@ export default function ApplicantsPage() {
 		setPageSize,
 		setSorters,
 		setFilters,
-		tableQuery: { isLoading, isFetching, error },
+		tableQuery: { isLoading, isFetching, isRefetching, error },
 	} = useTable<Applicant>({
 		resource: "applicants",
 
@@ -80,7 +80,7 @@ export default function ApplicantsPage() {
 			<LinkButton href={`/applicants/${applicant.documentId}`} variant="ghost" size="icon">
 				<Eye className="h-4 w-4" />
 			</LinkButton>
-			<LinkButton href={`/applicants/${applicant.documentId}/edit`} variant="ghost" size="icon">
+			<LinkButton href={`/applicants/edit/${applicant.documentId}`} variant="ghost" size="icon">
 				<Pencil className="h-4 w-4" />
 			</LinkButton>
 			<Button variant="ghost" size="icon" title="Delete">
@@ -94,12 +94,12 @@ export default function ApplicantsPage() {
 			<div className="space-y-4">
 				<div className="relative w-full justify-end flex items-center">
 					<div className="flex items-center gap-2">
-						{isFetching && <MiniLoader />}
+						{(isFetching || isRefetching) && <MiniLoader />}
 						<DataTableSearch
 							value={search}
 							onChange={handleSearch}
 							placeholder="Search applicant name..."
-							disabled={isFetching}
+							disabled={isFetching || isRefetching}
 						/>
 					</div>
 				</div>
@@ -107,7 +107,7 @@ export default function ApplicantsPage() {
 				<DataTable
 					data={result.data}
 					columns={applicantTableColumns}
-					isLoading={isFetching}
+					isLoading={isFetching || isRefetching}
 					onSort={handleSort}
 					actions={actions}
 				/>
@@ -116,7 +116,7 @@ export default function ApplicantsPage() {
 					currentPage={currentPage}
 					pageCount={pageCount}
 					pageSize={pageSize}
-					isLoading={isFetching}
+					isLoading={isFetching || isRefetching}
 					setCurrentPage={setCurrentPage}
 					setPageSize={setPageSize}
 				/>
