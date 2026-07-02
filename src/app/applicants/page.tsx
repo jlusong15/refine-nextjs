@@ -10,6 +10,7 @@ import { useTable } from "@refinedev/core"
 import { useState } from "react"
 import { applicantTableColumns } from "./columns"
 import ErrorPage from "@/components/layout/ErrorPage"
+import MiniLoader from "@/components/shared/MiniLoader"
 
 export default function ApplicantsPage() {
 	const pageName = "Applicants"
@@ -74,12 +75,15 @@ export default function ApplicantsPage() {
 		<DefaultPageLayout title={pageName}>
 			<div className="space-y-4">
 				<div className="relative w-full justify-end flex items-center">
-					<DataTableSearch
-						value={search}
-						onChange={handleSearch}
-						placeholder="Search applicant name..."
-						disabled={isFetching}
-					/>
+					<div className="flex items-center gap-2">
+						{isFetching && <MiniLoader />}
+						<DataTableSearch
+							value={search}
+							onChange={handleSearch}
+							placeholder="Search applicant name..."
+							disabled={isFetching}
+						/>
+					</div>
 				</div>
 
 				<DataTable data={result.data} columns={applicantTableColumns} isLoading={isFetching} onSort={handleSort} />
