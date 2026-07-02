@@ -1,19 +1,19 @@
 "use client"
 
 import DefaultPageLayout from "@/components/layout/DefaulPageLayout"
+import { DataTable } from "@/components/shared/data-table"
+import { DataTablePagination } from "@/components/shared/data-table/DataTablePagination"
+import { DataTableSearch } from "@/components/shared/data-table/DataTableSearch"
 import Loading from "@/components/shared/Loading"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Applicant } from "@/types/applicants.types"
 import { useTable } from "@refinedev/core"
-import { ArrowUpDown, Search } from "lucide-react"
 import { useState } from "react"
+import { applicantTableColumns } from "./columns"
+import ErrorPage from "@/components/layout/ErrorPage"
 
 export default function ApplicantsPage() {
+	const pageName = "Applicants"
 	const [search, setSearch] = useState("")
-
 	const {
 		result,
 		currentPage,
@@ -23,7 +23,7 @@ export default function ApplicantsPage() {
 		setPageSize,
 		setSorters,
 		setFilters,
-		tableQuery: { isLoading, error },
+		tableQuery: { isLoading, isFetching, error },
 	} = useTable<Applicant>({
 		resource: "applicants",
 
@@ -43,12 +43,10 @@ export default function ApplicantsPage() {
 	})
 
 	if (isLoading) return <Loading />
-
-	if (error) return <h3>Error fetching data</h3>
+	if (error) return <ErrorPage title={pageName} />
 
 	const handleSearch = (value: string) => {
 		setSearch(value)
-
 		setFilters(
 			value
 				? [
@@ -73,115 +71,27 @@ export default function ApplicantsPage() {
 	}
 
 	return (
-		<DefaultPageLayout title="Applicants">
+		<DefaultPageLayout title={pageName}>
 			<div className="space-y-4">
-				<div className="relative w-80">
-					<Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-					<Input
-						className="pl-9"
-						placeholder="Search applicant..."
+				<div className="relative w-full justify-end flex items-center">
+					<DataTableSearch
 						value={search}
-						onChange={(e) => handleSearch(e.target.value)}
+						onChange={handleSearch}
+						placeholder="Search applicant name..."
+						disabled={isFetching}
 					/>
 				</div>
 
-				<Table className="text-base mb-2">
-					<TableHeader className="bg-muted">
-						<TableRow>
-							<TableHead>
-								<Button variant="ghost" onClick={() => handleSort("id")} className="text-base">
-									ID
-									<ArrowUpDown className="ml-2 h-4 w-4" />
-								</Button>
-							</TableHead>
+				<DataTable data={result.data} columns={applicantTableColumns} isLoading={isFetching} onSort={handleSort} />
 
-							<TableHead>
-								<Button variant="ghost" onClick={() => handleSort("fullName")} className="text-base">
-									Full Name
-									<ArrowUpDown className="ml-2 h-4 w-4" />
-								</Button>
-							</TableHead>
-
-							<TableHead>
-								<Button variant="ghost" onClick={() => handleSort("email")} className="text-base">
-									Email
-									<ArrowUpDown className="ml-2 h-4 w-4" />
-								</Button>
-							</TableHead>
-
-							<TableHead>
-								<Button variant="ghost" onClick={() => handleSort("phone")} className="text-base">
-									Phone
-									<ArrowUpDown className="ml-2 h-4 w-4" />
-								</Button>
-							</TableHead>
-
-							<TableHead>
-								<Button variant="ghost" onClick={() => handleSort("appliedRole")} className="text-base">
-									Applied Role
-									<ArrowUpDown className="ml-2 h-4 w-4" />
-								</Button>
-							</TableHead>
-
-							<TableHead>
-								<Button variant="ghost" onClick={() => handleSort("applicationStatus")} className="text-base">
-									Status
-									<ArrowUpDown className="ml-2 h-4 w-4" />
-								</Button>
-							</TableHead>
-						</TableRow>
-					</TableHeader>
-
-					<TableBody>
-						{result.data.map((applicant) => (
-							<TableRow key={applicant.id}>
-								<TableCell>{applicant.id}</TableCell>
-								<TableCell>{applicant.fullName}</TableCell>
-								<TableCell>{applicant.email}</TableCell>
-								<TableCell>{applicant.phone}</TableCell>
-								<TableCell>{applicant.appliedRole}</TableCell>
-								<TableCell>{applicant.applicationStatus}</TableCell>
-							</TableRow>
-						))}
-					</TableBody>
-				</Table>
-
-				<div className="flex items-center justify-between">
-					<div className="space-x-2">
-						<Button
-							className="border px-3 py-1 rounded"
-							disabled={currentPage <= 1}
-							onClick={() => setCurrentPage(currentPage - 1)}
-						>
-							Previous
-						</Button>
-
-						<span className="text-base">
-							Page {currentPage} of {pageCount}
-						</span>
-
-						<Button
-							className="border px-3 py-1 rounded"
-							disabled={currentPage >= pageCount}
-							onClick={() => setCurrentPage(currentPage + 1)}
-						>
-							Next
-						</Button>
-					</div>
-
-					<Select value={pageSize.toString()} onValueChange={(value) => setPageSize(Number(value))}>
-						<SelectTrigger className="w-20">
-							<SelectValue />
-						</SelectTrigger>
-
-						<SelectContent>
-							<SelectItem value="5">5</SelectItem>
-							<SelectItem value="10">10</SelectItem>
-							<SelectItem value="20">20</SelectItem>
-							<SelectItem value="50">50</SelectItem>
-						</SelectContent>
-					</Select>
-				</div>
+				<DataTablePagination
+					currentPage={currentPage}
+					pageCount={pageCount}
+					pageSize={pageSize}
+					isLoading={isFetching}
+					setCurrentPage={setCurrentPage}
+					setPageSize={setPageSize}
+				/>
 			</div>
 		</DefaultPageLayout>
 	)
