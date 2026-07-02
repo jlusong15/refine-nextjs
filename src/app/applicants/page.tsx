@@ -77,10 +77,10 @@ export default function ApplicantsPage() {
 	// @@TODO: Implement delete functionality
 	const actions = (applicant: Applicant) => (
 		<div className="flex justify-end gap-2">
-			<LinkButton href={`/applicants/${applicant.id}`} variant="ghost" size="icon">
+			<LinkButton href={`/applicants/${applicant.documentId}`} variant="ghost" size="icon">
 				<Eye className="h-4 w-4" />
 			</LinkButton>
-			<LinkButton href={`/applicants/${applicant.id}/edit`} variant="ghost" size="icon">
+			<LinkButton href={`/applicants/${applicant.documentId}/edit`} variant="ghost" size="icon">
 				<Pencil className="h-4 w-4" />
 			</LinkButton>
 			<Button variant="ghost" size="icon" title="Delete">
