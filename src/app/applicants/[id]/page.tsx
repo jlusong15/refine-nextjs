@@ -18,6 +18,7 @@ import { useParams, useRouter } from "next/navigation"
 import { useState } from "react"
 import { toast } from "sonner"
 import CreateInterviewDialog from "./CreateInterviewDialog"
+import React from "react"
 
 export default function ApplicantDetailsPage() {
 	const router = useRouter()
@@ -154,11 +155,9 @@ export default function ApplicantDetailsPage() {
 							<MiniLoader />
 						) : interviews?.length > 0 ? (
 							interviews?.map((interview) => (
-								<>
-									<span key={"id_" + interview.documentId} className="font-semibold m-2 flex text-muted-foreground">
-										ID: {interview.documentId}
-									</span>
-									<Table key={interview.documentId} className="mb-5">
+								<React.Fragment key={interview.documentId}>
+									<span className="font-semibold m-2 flex text-muted-foreground">ID: {interview.documentId}</span>
+									<Table className="mb-5">
 										<TableBody>
 											<DetailsRow label="Role" value={interview.role} />
 											<DetailsRow label="Interviewer Name" value={interview.interviewerName} />
@@ -173,7 +172,7 @@ export default function ApplicantDetailsPage() {
 											/>
 										</TableBody>
 									</Table>
-								</>
+								</React.Fragment>
 							))
 						) : (
 							<p className="text-muted-foreground">No interviews scheduled.</p>
