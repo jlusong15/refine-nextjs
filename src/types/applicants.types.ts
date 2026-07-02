@@ -13,7 +13,7 @@ export interface Applicant extends BaseEntity {
 	phone: string;
 	appliedRole: string;
 	yearsOfExperience: number;
-	status: ApplicantStatus;
+	applicationStatus: ApplicantStatus;
 	expectedSalary?: number;
 	availableStartDate?: string;
 	skills: string[];
