@@ -12,7 +12,7 @@ import { applicantTableColumns } from "./columns"
 import ErrorPage from "@/components/layout/ErrorPage"
 import MiniLoader from "@/components/shared/MiniLoader"
 import { Button } from "@/components/ui/button"
-import { Link } from "lucide-react"
+import { Eye, Link, Pencil, Trash2 } from "lucide-react"
 import LinkButton from "@/components/shared/LinkButton"
 
 export default function ApplicantsPage() {
@@ -74,11 +74,18 @@ export default function ApplicantsPage() {
 		])
 	}
 
+	// @@TODO: Implement delete functionality
 	const actions = (applicant: Applicant) => (
 		<div className="flex justify-end gap-2">
-			<LinkButton href={`/applicants/${applicant.id}`} variant="outline" size="sm">
-				View Details
+			<LinkButton href={`/applicants/${applicant.id}`} variant="ghost" size="icon">
+				<Eye className="h-4 w-4" />
 			</LinkButton>
+			<LinkButton href={`/applicants/${applicant.id}/edit`} variant="ghost" size="icon">
+				<Pencil className="h-4 w-4" />
+			</LinkButton>
+			<Button variant="ghost" size="icon" title="Delete">
+				<Trash2 className="h-4 w-4 text-destructive" />
+			</Button>
 		</div>
 	)
 
