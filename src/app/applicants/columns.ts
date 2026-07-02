@@ -1,4 +1,4 @@
-import { DataTableColumn } from "@/components/shared/data-table"
+import { DataTableColumn } from "@/components/shared/DataTable"
 import { Applicant } from "@/types/applicants.types"
 
 export const applicantTableColumns: DataTableColumn<Applicant>[] = [

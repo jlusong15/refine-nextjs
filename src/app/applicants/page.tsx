@@ -1,9 +1,9 @@
 "use client"
 
 import DefaultPageLayout from "@/components/layout/DefaulPageLayout"
-import { DataTable } from "@/components/shared/data-table"
-import { DataTablePagination } from "@/components/shared/data-table/DataTablePagination"
-import { DataTableSearch } from "@/components/shared/data-table/DataTableSearch"
+import { DataTable } from "@/components/shared/DataTable"
+import { DataTablePagination } from "@/components/shared/DataTable/DataTablePagination"
+import { DataTableSearch } from "@/components/shared/DataTable/DataTableSearch"
 import Loading from "@/components/shared/Loading"
 import { Applicant } from "@/types/applicants.types"
 import { useTable } from "@refinedev/core"
@@ -11,6 +11,9 @@ import { useState } from "react"
 import { applicantTableColumns } from "./columns"
 import ErrorPage from "@/components/layout/ErrorPage"
 import MiniLoader from "@/components/shared/MiniLoader"
+import { Button } from "@/components/ui/button"
+import { Link } from "lucide-react"
+import LinkButton from "@/components/shared/LinkButton"
 
 export default function ApplicantsPage() {
 	const pageName = "Applicants"
@@ -71,6 +74,14 @@ export default function ApplicantsPage() {
 		])
 	}
 
+	const actions = (applicant: Applicant) => (
+		<div className="flex justify-end gap-2">
+			<LinkButton href={`/applicants/${applicant.id}`} variant="outline" size="sm">
+				View Details
+			</LinkButton>
+		</div>
+	)
+
 	return (
 		<DefaultPageLayout title={pageName}>
 			<div className="space-y-4">
@@ -86,7 +97,13 @@ export default function ApplicantsPage() {
 					</div>
 				</div>
 
-				<DataTable data={result.data} columns={applicantTableColumns} isLoading={isFetching} onSort={handleSort} />
+				<DataTable
+					data={result.data}
+					columns={applicantTableColumns}
+					isLoading={isFetching}
+					onSort={handleSort}
+					actions={actions}
+				/>
 
 				<DataTablePagination
 					currentPage={currentPage}

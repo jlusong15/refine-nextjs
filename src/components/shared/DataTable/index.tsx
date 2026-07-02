@@ -18,9 +18,16 @@ interface DataTableProps<T extends { id: number | string }> {
 	columns: DataTableColumn<T>[]
 	isLoading?: boolean
 	onSort?: (field: keyof T) => void
+	actions?: (row: T) => React.ReactNode
 }
 
-export function DataTable<T extends { id: number | string }>({ data, columns, isLoading, onSort }: DataTableProps<T>) {
+export function DataTable<T extends { id: number | string }>({
+	data,
+	columns,
+	isLoading,
+	actions,
+	onSort,
+}: DataTableProps<T>) {
 	return (
 		<Table className={cn("mb-2 text-base", isLoading && "pointer-events-none opacity-60")}>
 			<TableHeader className="bg-muted">
@@ -37,6 +44,7 @@ export function DataTable<T extends { id: number | string }>({ data, columns, is
 							)}
 						</TableHead>
 					))}
+					{actions && <TableHead></TableHead>}
 				</TableRow>
 			</TableHeader>
 
@@ -48,6 +56,7 @@ export function DataTable<T extends { id: number | string }>({ data, columns, is
 								{column.render ? column.render(row) : String(row[column.key] ?? "")}
 							</TableCell>
 						))}
+						{actions && <TableCell>{actions(row)}</TableCell>}
 					</TableRow>
 				))}
 			</TableBody>
