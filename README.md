@@ -31,7 +31,6 @@ Before running the project, ensure you have the following installed:
 
 * Node.js 20 or later
 * npm
-* Git
 
 ---
 
