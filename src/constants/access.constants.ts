@@ -14,3 +14,4 @@ export const ACCESS_ACTIONS = {
 } as const
 
 export const ACCESS_ACTION_VALUES = Object.values(ACCESS_ACTIONS) as ActionType[]
+export const ACCESS_QUERY_KEY = "access"

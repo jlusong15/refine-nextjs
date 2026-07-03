@@ -2,6 +2,8 @@
 
 import { useToggleViewerStore } from "@/components/store/toggle-viewer.store"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { ACCESS_QUERY_KEY } from "@/constants/access.constants"
+import { invalidateAccessQuery } from "@/lib/query"
 import { RoleType } from "@/types/access-control.types"
 import { useQueryClient } from "@tanstack/react-query"
 
@@ -13,15 +15,7 @@ export default function ToggleViewer() {
 
 	const handleChange = (value: RoleType) => {
 		setCurrentViewer(value)
-		console.table(
-			queryClient
-				.getQueryCache()
-				.getAll()
-				.map((q) => q.queryKey),
-		)
-		queryClient.invalidateQueries({
-			predicate: (query) => query.queryKey[0] === "access",
-		})
+		invalidateAccessQuery(queryClient, ACCESS_QUERY_KEY)
 	}
 
 	return (

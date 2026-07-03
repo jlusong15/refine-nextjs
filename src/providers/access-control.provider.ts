@@ -6,20 +6,11 @@ export const accessControlProvider: AccessControlProvider = {
 	can: async ({ resource, action }) => {
 		const { currentViewer, accessRoles } =
 			useToggleViewerStore.getState()
-
 		const role = accessRoles.find(
 			(r) => r.roleCode === currentViewer,
 		)
-
 		const can =
 			role?.roleAccess.includes(action as ActionType) ?? false
-
-		console.log({
-			viewer: currentViewer,
-			resource,
-			action,
-			can,
-		})
 
 		return { can }
 	}
