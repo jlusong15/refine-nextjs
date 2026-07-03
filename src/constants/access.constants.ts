@@ -1,0 +1,12 @@
+export const ACCESS_ROLES = {
+  ADMIN: "ADMIN",
+  RECRUITER: "RECRUITER",
+  INTERVIEWER: "INTERVIEWER",
+} as const
+
+export const ACCESS_ACTIONS = {
+  VIEW: "VIEW",
+  CREATE: "CREATE",
+  UPDATE: "UPDATE",
+  DELETE: "DELETE",
+} as const

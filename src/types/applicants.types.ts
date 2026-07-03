@@ -1,6 +1,9 @@
+import { APPLICANT_STATUS } from "@/constants/applicant.constants";
 import { Interview } from "./interview.types";
 import { BaseEntity } from "./strapi.types";
 
+export type ApplicantStatus =
+	(typeof APPLICANT_STATUS)[keyof typeof APPLICANT_STATUS];
 export interface Applicant extends BaseEntity {
 	fullName: string;
 	email: string;
@@ -14,18 +17,3 @@ export interface Applicant extends BaseEntity {
 	notes?: string;
 	interviews?: Interview[];
 }
-
-export const APPLICANT_STATUS = {
-	NEW: "New",
-	SCREENING: "Screening",
-	INTERVIEW_SCHEDULED: "Interview Scheduled",
-	INTERVIEWED: "Interviewed",
-	TECHNICAL_EXAM: "Technical Exam",
-	OFFER_SENT: "Offer Sent",
-	HIRED: "Hired",
-	REJECTED: "Rejected",
-	WITHDRAWN: "Withdrawn",
-} as const;
-
-export type ApplicantStatus =
-	(typeof APPLICANT_STATUS)[keyof typeof APPLICANT_STATUS];

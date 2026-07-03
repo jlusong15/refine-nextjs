@@ -1,4 +1,4 @@
-import { ToggleViewerStore } from "@/types/toggle-viewer.types"
+import { ToggleViewerStore } from "@/types/access-control.types"
 import { create } from "zustand"
 
 export const useToggleViewerStore = create<ToggleViewerStore>((set) => ({

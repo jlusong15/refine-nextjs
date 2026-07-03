@@ -1,5 +1,5 @@
 import useAccess from "@/hooks/useAccess"
-import { ActionType } from "@/types/toggle-viewer.types"
+import { ActionType } from "@/types/access-control.types"
 import React from "react"
 
 interface CanAccessProps {
@@ -8,7 +8,7 @@ interface CanAccessProps {
 	fallback?: React.ReactNode | string
 }
 
-const CanAccess = ({ children, action, fallback = ''} : CanAccessProps) => {
+const CanAccess = ({ children, action, fallback = "" }: CanAccessProps) => {
 	const { hasAccess } = useAccess()
 
 	return hasAccess(action) ? children : fallback

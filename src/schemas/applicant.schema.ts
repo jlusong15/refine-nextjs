@@ -1,4 +1,4 @@
-import { APPLICANT_STATUS } from "@/types/applicants.types"
+import { APPLICANT_STATUS } from "@/constants/applicant.constants"
 import { z } from "zod"
 
 export const applicantSchema = z.object({

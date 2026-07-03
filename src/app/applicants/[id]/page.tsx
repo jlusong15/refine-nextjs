@@ -19,6 +19,8 @@ import { useState } from "react"
 import { toast } from "sonner"
 import CreateInterviewDialog from "./CreateInterviewDialog"
 import React from "react"
+import { ACCESS_ACTIONS } from "@/constants/access.constants"
+import CanAccess from "@/components/shared/CanAccess"
 
 export default function ApplicantDetailsPage() {
 	const router = useRouter()
@@ -32,11 +34,6 @@ export default function ApplicantDetailsPage() {
 	})
 	const { result: resultQuery, query: interviewsQuery } = useList({
 		resource: "interviews",
-		// meta: {
-		// 	query: {
-		// 		applicantId: id,
-		// 	},
-		// },
 		pagination: {
 			mode: "off",
 		},
@@ -99,24 +96,30 @@ export default function ApplicantDetailsPage() {
 				<div className="flex flex-col gap-2 sm:flex-row sm:items-center">
 					{isDeleting && <MiniLoader />}
 
-					<Button className="w-full sm:w-auto" disabled={isDeleting} onClick={() => setIsInterviewDialogOpen(true)}>
-						<CalendarPlus />
-						Schedule Interview
-					</Button>
+					<CanAccess action={ACCESS_ACTIONS.CREATE}>
+						<Button className="w-full sm:w-auto" disabled={isDeleting} onClick={() => setIsInterviewDialogOpen(true)}>
+							<CalendarPlus />
+							Schedule Interview
+						</Button>
+					</CanAccess>
 
-					<LinkButton
-						href={`/applicants/edit/${applicant.documentId}`}
-						className="w-full sm:w-auto"
-						disabled={isDeleting}
-					>
-						<Pencil />
-						Edit Applicant
-					</LinkButton>
+					<CanAccess action={ACCESS_ACTIONS.UPDATE}>
+						<LinkButton
+							href={`/applicants/edit/${applicant.documentId}`}
+							className="w-full sm:w-auto"
+							disabled={isDeleting}
+						>
+							<Pencil />
+							Edit Applicant
+						</LinkButton>
+					</CanAccess>
 
-					<Button variant="destructive" className="w-full sm:w-auto" onClick={handleDelete} disabled={isDeleting}>
-						<Trash2 />
-						Delete
-					</Button>
+					<CanAccess action={ACCESS_ACTIONS.DELETE}>
+						<Button variant="destructive" className="w-full sm:w-auto" onClick={handleDelete} disabled={isDeleting}>
+							<Trash2 />
+							Delete
+						</Button>
+					</CanAccess>
 				</div>
 			</div>
 

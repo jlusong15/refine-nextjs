@@ -1,7 +1,7 @@
 "use client"
 
 import DefaultPageLayout from "@/components/layout/DefaulPageLayout"
-import { APPLICANT_STATUS } from "@/types/applicants.types"
+import { APPLICANT_STATUS } from "@/constants/applicant.constants"
 import { useCreate } from "@refinedev/core"
 import { useRouter } from "next/navigation"
 import { CreateApplicantForm } from "./CreateApplicantForm"
