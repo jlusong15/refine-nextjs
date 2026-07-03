@@ -19,6 +19,17 @@
 * **Caching & Synchronization** – TanStack Query, through Refine, manages query caching, background refetching, and automatic query invalidation to keep the UI synchronized with backend data.
 * **Environment Configuration** – The frontend connects to the shared test backend using environment variables, allowing the same application to be configured for different environments without code changes.
 
+### Access Control Roles
+The application uses Refine's `accessControlProvider` to demonstrate role-based access control. The following mock roles and permissions are configured:
+
+| Role            | Permissions                  |
+| --------------- | ---------------------------- |
+| **ADMIN**       | View, Create, Update, Delete |
+| **RECRUITER**   | View, Create, Update         |
+| **INTERVIEWER** | View                         |
+
+These roles are used to conditionally display pages, actions, and UI elements throughout the application based on the current user's assigned permissions.
+
 
 ## Challenges Encountered
 Some challenges included integrating Refine with Next.js App Router, handling query invalidation to keep dashboard statistics up to date, optimizing loading and background refetch states for a smoother user experience, and configuring environment variables and deployment for seamless communication with the shared Strapi backend.
