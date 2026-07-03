@@ -14,17 +14,13 @@ export const InputNumber = React.forwardRef<HTMLInputElement, InputNumberProps>(
 	({ value = null, onChange, allowDecimal = false, className, min, max, ...props }, ref) => {
 		const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 			let input = e.target.value
-
-			// Empty input
 			if (input === "") {
 				onChange?.(null)
 				return
 			}
 
-			// Remove invalid characters
 			input = allowDecimal ? input.replace(/[^\d.]/g, "") : input.replace(/\D/g, "")
 
-			// Only one decimal point
 			if (allowDecimal) {
 				const parts = input.split(".")
 				if (parts.length > 2) {
