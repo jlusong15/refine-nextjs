@@ -2,6 +2,7 @@
 
 import { useToggleViewerStore } from "@/components/store/toggle-viewer.store"
 import { RESOURCE_NAME } from "@/constants/resource.constants"
+import { AccessRolesState } from "@/types/access-control.types"
 import { useList } from "@refinedev/core"
 import { useEffect } from "react"
 import Loading from "./shared/Loading"
@@ -13,7 +14,7 @@ type Props = {
 export default function AppInitializer({ children }: Props) {
 	const setAccessRoles = useToggleViewerStore((s) => s.setAccessRoles)
 	const accessRoles = useToggleViewerStore.getState().accessRoles
-	const { result, query } = useList({
+	const { result, query } = useList<AccessRolesState>({
 		resource: RESOURCE_NAME.ACCESS_CONTROL,
 		pagination: {
 			mode: "off",

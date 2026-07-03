@@ -14,6 +14,7 @@ import { ACCESS_ACTIONS } from "@/constants/access.constants"
 import { RESOURCE_NAME } from "@/constants/resource.constants"
 import { formatCurrency, formatDateTime } from "@/lib/format"
 import { Applicant } from "@/types/applicants.types"
+import { Interview } from "@/types/interview.types"
 import { CanAccess, useDelete, useList, useShow } from "@refinedev/core"
 import { CalendarPlus, ChevronLeft, Pencil, Trash2 } from "lucide-react"
 import { useParams, useRouter } from "next/navigation"
@@ -31,7 +32,7 @@ export default function ApplicantDetailsPage() {
 		resource: RESOURCE_NAME.APPLICANTS,
 		id,
 	})
-	const { result: resultQuery, query: interviewsQuery } = useList({
+	const { result: resultQuery, query: interviewsQuery } = useList<Interview>({
 		resource: RESOURCE_NAME.INTERVIEWS,
 		pagination: {
 			mode: "off",

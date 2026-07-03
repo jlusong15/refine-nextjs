@@ -2,38 +2,29 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { APPLICANT_STATUS } from "@/constants/applicant.constants"
-import { RESOURCE_NAME } from "@/constants/resource.constants"
-import { useList } from "@refinedev/core"
+import { Applicant, ApplicantStatus } from "@/types/applicants.types"
+import { Interview } from "@/types/interview.types"
 import { BriefcaseBusiness, CalendarClock, UserCheck, Users } from "lucide-react"
 
-export default function DashboardStats() {
-	const { result: applicants } = useList({
-		resource: RESOURCE_NAME.APPLICANTS,
-		pagination: {
-			mode: "off",
-		},
-	})
-	const { result: interviews } = useList({
-		resource: RESOURCE_NAME.INTERVIEWS,
-		pagination: {
-			mode: "off",
-		},
-	})
-	const applicantList = applicants?.data ?? []
-	const interviewList = interviews?.data ?? []
+type DashboardStatsProps = {
+	applicants: Applicant[]
+	interviews: Interview[]
+}
+
+export default function DashboardStats({ applicants, interviews }: DashboardStatsProps) {
 	const today = new Date()
-	const upcomingInterviews = interviewList.filter((interview) => new Date(interview.interviewDate) >= today)
-	const hiredApplicants = applicantList.filter((applicant) => applicant.applicantStatus === APPLICANT_STATUS.HIRED)
-	const activeApplicants = applicantList.filter(
-		(applicant) =>
-			![APPLICANT_STATUS.HIRED, APPLICANT_STATUS.REJECTED, APPLICANT_STATUS.WITHDRAWN].includes(
-				applicant.applicantStatus,
-			),
-	)
+	const upcomingInterviews = interviews?.filter((interview) => new Date(interview?.interviewDate) >= today)
+	const hiredApplicants = applicants?.filter((applicant) => applicant.applicationStatus === APPLICANT_STATUS.HIRED)
+	const inactiveStatuses: ApplicantStatus[] = [
+		APPLICANT_STATUS.HIRED,
+		APPLICANT_STATUS.REJECTED,
+		APPLICANT_STATUS.WITHDRAWN,
+	]
+	const activeApplicants = applicants?.filter((applicant) => !inactiveStatuses.includes(applicant.applicationStatus))
 	const stats = [
 		{
 			title: "Total Applicants",
-			value: applicantList.length,
+			value: applicants?.length,
 			icon: Users,
 		},
 		{
@@ -52,6 +43,9 @@ export default function DashboardStats() {
 			icon: BriefcaseBusiness,
 		},
 	]
+
+	console.log('applicants', applicants)
+	console.log('hiredApplicants', hiredApplicants)
 
 	return (
 		<div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
