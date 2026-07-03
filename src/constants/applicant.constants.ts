@@ -1,3 +1,5 @@
+import { ApplicantStatus } from "@/types/applicants.types";
+
 export const APPLICANT_STATUS = {
 	NEW: "New",
 	SCREENING: "Screening",
@@ -9,3 +11,9 @@ export const APPLICANT_STATUS = {
 	REJECTED: "Rejected",
 	WITHDRAWN: "Withdrawn",
 } as const;
+
+export const INACTIVE_STATUSES: ApplicantStatus[] = [
+  APPLICANT_STATUS.HIRED,
+  APPLICANT_STATUS.REJECTED,
+  APPLICANT_STATUS.WITHDRAWN,
+]

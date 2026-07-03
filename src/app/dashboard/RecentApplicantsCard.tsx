@@ -3,18 +3,21 @@
 import LinkButton from "@/components/shared/LinkButton"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { formatDate } from "@/lib/format"
 import { Applicant } from "@/types/applicants.types"
-import { format } from "date-fns"
 import { ArrowRight } from "lucide-react"
+import { useMemo } from "react"
 
 type RecentApplicantsCardProps = {
 	applicants: Applicant[]
 }
 
 export default function RecentApplicantsCard({ applicants }: RecentApplicantsCardProps) {
-	const applicantsList = [...(applicants ?? [])]
-		.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-		.slice(0, 5)
+	const applicantsList = useMemo(() => {
+		return [...(applicants ?? [])]
+			.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+			.slice(0, 5)
+	}, [applicants])
 
 	return (
 		<Card>
@@ -52,9 +55,7 @@ export default function RecentApplicantsCard({ applicants }: RecentApplicantsCar
 									<TableCell className="font-medium">{applicant.phone}</TableCell>
 									<TableCell className="font-medium">{applicant.appliedRole}</TableCell>
 									<TableCell>{applicant.applicationStatus}</TableCell>
-									<TableCell className="text-right text-muted-foreground">
-										{format(new Date(applicant.createdAt), "MMM dd, yyyy")}
-									</TableCell>
+									<TableCell className="text-right text-muted-foreground">{formatDate(applicant.createdAt)}</TableCell>
 								</TableRow>
 							))
 						)}

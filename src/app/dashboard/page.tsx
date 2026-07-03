@@ -17,15 +17,13 @@ export default function DashboardPage() {
 	const applicantsQuery = useList<Applicant>({
 		resource: RESOURCE_NAME.APPLICANTS,
 		pagination: {
-			currentPage: 1,
-			pageSize: 100000,
+			mode: "off",
 		},
 	})
 	const interviewsQuery = useList<Interview>({
 		resource: RESOURCE_NAME.INTERVIEWS,
 		pagination: {
-			currentPage: 1,
-			pageSize: 100000,
+			mode: "off",
 		},
 	})
 
@@ -36,11 +34,12 @@ export default function DashboardPage() {
 		return <Loading />
 	}
 	if (applicantsQuery.query.isError || interviewsQuery.query.isError) {
-		;<ErrorPage title={PAGE_NAME.DASHBOARD} />
+		return <ErrorPage title={PAGE_NAME.DASHBOARD} />
 	}
+
 	return (
 		<DefaultPageLayout title="Dashboard">
-			<div className="flex flex-col gap-3">
+			<div className="flex flex-col gap-5">
 				<div>
 					<p className="text-muted-foreground">Welcome back! Here's an overview of your recruitment pipeline.</p>
 				</div>

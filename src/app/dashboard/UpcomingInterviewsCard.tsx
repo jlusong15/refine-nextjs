@@ -2,8 +2,9 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { formatDate } from "@/lib/format"
 import { Interview } from "@/types/interview.types"
-import { format } from "date-fns"
+import { useMemo } from "react"
 
 type UpcomingInterviewsCardProps = {
 	interviews: Interview[]
@@ -11,10 +12,12 @@ type UpcomingInterviewsCardProps = {
 
 export default function UpcomingInterviewsCard({ interviews }: UpcomingInterviewsCardProps) {
 	const today = new Date()
-	const interviewList = [...(interviews ?? [])]
-		.filter((interview) => new Date(interview.interviewDate).getTime() >= today.getTime())
-		.sort((a, b) => new Date(a.interviewDate).getTime() - new Date(b.interviewDate).getTime())
-		.slice(0, 5)
+	const interviewList = useMemo(() => {
+		return [...(interviews ?? [])]
+			.filter((interview) => new Date(interview.interviewDate).getTime() >= today.getTime())
+			.sort((a, b) => new Date(a.interviewDate).getTime() - new Date(b.interviewDate).getTime())
+			.slice(0, 5)
+	}, [interviews, today])
 
 	return (
 		<Card>
@@ -43,7 +46,7 @@ export default function UpcomingInterviewsCard({ interviews }: UpcomingInterview
 									<TableCell className="font-medium">{interview.role}</TableCell>
 									<TableCell>{interview.interviewerName}</TableCell>
 									<TableCell className="text-right text-muted-foreground">
-										{format(new Date(interview.interviewDate), "MMM dd, yyyy")}
+										{formatDate(interview.interviewDate)}
 									</TableCell>
 								</TableRow>
 							))

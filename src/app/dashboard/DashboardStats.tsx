@@ -1,10 +1,11 @@
 "use client"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { APPLICANT_STATUS } from "@/constants/applicant.constants"
-import { Applicant, ApplicantStatus } from "@/types/applicants.types"
+import { APPLICANT_STATUS, INACTIVE_STATUSES } from "@/constants/applicant.constants"
+import { Applicant } from "@/types/applicants.types"
 import { Interview } from "@/types/interview.types"
 import { BriefcaseBusiness, CalendarClock, UserCheck, Users } from "lucide-react"
+import { useMemo } from "react"
 
 type DashboardStatsProps = {
 	applicants: Applicant[]
@@ -13,33 +14,35 @@ type DashboardStatsProps = {
 
 export default function DashboardStats({ applicants, interviews }: DashboardStatsProps) {
 	const today = new Date()
-	const upcomingInterviews = interviews?.filter((interview) => new Date(interview?.interviewDate) >= today)
-	const hiredApplicants = applicants?.filter((applicant) => applicant.applicationStatus === APPLICANT_STATUS.HIRED)
-	const inactiveStatuses: ApplicantStatus[] = [
-		APPLICANT_STATUS.HIRED,
-		APPLICANT_STATUS.REJECTED,
-		APPLICANT_STATUS.WITHDRAWN,
-	]
-	const activeApplicants = applicants?.filter((applicant) => !inactiveStatuses.includes(applicant.applicationStatus))
+	const upcomingInterviews = useMemo(() => {
+		return interviews?.filter((interview) => new Date(interview?.interviewDate) >= today) ?? []
+	}, [interviews, today])
+	const hiredApplicants = useMemo(() => {
+		return applicants?.filter((applicant) => applicant?.applicationStatus === APPLICANT_STATUS.HIRED) ?? []
+	}, [applicants])
+
+	const activeApplicants = useMemo(() => {
+		return applicants?.filter((applicant) => !INACTIVE_STATUSES.includes(applicant?.applicationStatus)) ?? []
+	}, [applicants])
 	const stats = [
 		{
 			title: "Total Applicants",
-			value: applicants?.length,
+			value: applicants?.length ?? 0,
 			icon: Users,
 		},
 		{
 			title: "Upcoming Interviews",
-			value: upcomingInterviews.length,
+			value: upcomingInterviews?.length ?? 0,
 			icon: CalendarClock,
 		},
 		{
 			title: "Hired",
-			value: hiredApplicants.length,
+			value: hiredApplicants?.length ?? 0,
 			icon: UserCheck,
 		},
 		{
 			title: "Active Applications",
-			value: activeApplicants.length,
+			value: activeApplicants?.length ?? 0,
 			icon: BriefcaseBusiness,
 		},
 	]
@@ -53,10 +56,8 @@ export default function DashboardStats({ applicants, interviews }: DashboardStat
 					<Card key={stat.title}>
 						<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
 							<CardTitle className="text-sm font-medium">{stat.title}</CardTitle>
-
 							<Icon className="h-5 w-5 text-muted-foreground" />
 						</CardHeader>
-
 						<CardContent>
 							<div className="text-3xl font-bold">{stat.value}</div>
 						</CardContent>

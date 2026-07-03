@@ -30,21 +30,19 @@ export default function ApplicantsPage() {
 	const {
 		result,
 		currentPage,
-		setCurrentPage,
 		pageCount,
 		pageSize,
+		setCurrentPage,
 		setPageSize,
 		setSorters,
 		setFilters,
 		tableQuery: { isLoading, isFetching, isRefetching, error },
 	} = useTable<Applicant>({
 		resource: RESOURCE_NAME.APPLICANTS,
-
 		pagination: {
 			currentPage: 1,
 			pageSize: 10,
 		},
-
 		sorters: {
 			initial: [
 				{
@@ -83,26 +81,6 @@ export default function ApplicantsPage() {
 		])
 	}
 
-	const actions = (applicant: Applicant) => (
-		<div className="flex justify-end gap-2">
-			<CanAccess resource={RESOURCE_NAME.APPLICANTS} action={ACCESS_ACTIONS.VIEW}>
-				<LinkButton href={`/applicants/${applicant.documentId}`} variant="ghost" size="icon">
-					<Eye className="h-4 w-4" />
-				</LinkButton>
-			</CanAccess>
-			<CanAccess resource={RESOURCE_NAME.APPLICANTS} action={ACCESS_ACTIONS.UPDATE}>
-				<LinkButton href={`/applicants/edit/${applicant.documentId}`} variant="ghost" size="icon">
-					<Pencil className="h-4 w-4" />
-				</LinkButton>
-			</CanAccess>
-			<CanAccess resource={RESOURCE_NAME.APPLICANTS} action={ACCESS_ACTIONS.DELETE}>
-				<Button variant="ghost" size="icon" title="Delete" onClick={() => setSelectedApplicant(applicant)}>
-					<Trash2 className="h-4 w-4 text-destructive" />
-				</Button>
-			</CanAccess>
-		</div>
-	)
-
 	const handleDelete = () => {
 		if (!selectedApplicant) return
 
@@ -129,6 +107,26 @@ export default function ApplicantsPage() {
 		setPageSize(size)
 		setCurrentPage(1)
 	}
+
+	const actions = (applicant: Applicant) => (
+		<div className="flex justify-end gap-2">
+			<CanAccess resource={RESOURCE_NAME.APPLICANTS} action={ACCESS_ACTIONS.VIEW}>
+				<LinkButton href={`/applicants/${applicant.documentId}`} variant="ghost" size="icon">
+					<Eye className="h-4 w-4" />
+				</LinkButton>
+			</CanAccess>
+			<CanAccess resource={RESOURCE_NAME.APPLICANTS} action={ACCESS_ACTIONS.UPDATE}>
+				<LinkButton href={`/applicants/edit/${applicant.documentId}`} variant="ghost" size="icon">
+					<Pencil className="h-4 w-4" />
+				</LinkButton>
+			</CanAccess>
+			<CanAccess resource={RESOURCE_NAME.APPLICANTS} action={ACCESS_ACTIONS.DELETE}>
+				<Button variant="ghost" size="icon" title="Delete" onClick={() => setSelectedApplicant(applicant)}>
+					<Trash2 className="h-4 w-4 text-destructive" />
+				</Button>
+			</CanAccess>
+		</div>
+	)
 
 	return (
 		<DefaultPageLayout title={PAGE_NAME.APPLICANTS}>
