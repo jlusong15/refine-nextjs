@@ -11,6 +11,7 @@
 
 ## API Integration Approach
 * **Backend API** – The application communicates with a Strapi REST API hosted in a shared **test environment on Railway**.
+* **Data Provider** – API communication is centralized through Refine's `dataProvider`, which is configured with the Strapi Data Provider to enable resource-based CRUD operations.
 * **Database** – The Strapi backend is connected to a **PostgreSQL database hosted on Supabase**.
 * **Data Provider** – Refine's Strapi data provider is used to simplify CRUD operations and resource management.
 * **HTTP Client** – Axios is configured to handle authenticated API requests using the required environment variables.
