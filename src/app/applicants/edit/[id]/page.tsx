@@ -56,7 +56,7 @@ export default function ApplicantEditPage() {
 								...values,
 								availableStartDate: values.availableStartDate?.toISOString(),
 							},
-							invalidates: ["detail"],
+							invalidates: ["detail", "list"],
 						},
 						{
 							onSuccess: () => router.push(`/applicants/${id}`),

@@ -72,6 +72,7 @@ export default function ApplicantsPage() {
 				: [],
 			"replace",
 		)
+		setCurrentPage(1)
 	}
 
 	const handleSort = (field: keyof Applicant) => {
@@ -81,6 +82,7 @@ export default function ApplicantsPage() {
 				order: "asc",
 			},
 		])
+		setCurrentPage(1)
 	}
 
 	const handleDelete = () => {

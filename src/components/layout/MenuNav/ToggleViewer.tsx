@@ -20,7 +20,7 @@ export default function ToggleViewer() {
 
 	return (
 		<Select value={currentViewer} onValueChange={handleChange}>
-			<SelectTrigger className="w-40">
+			<SelectTrigger className="w-40 text-white">
 				<SelectValue />
 			</SelectTrigger>
 

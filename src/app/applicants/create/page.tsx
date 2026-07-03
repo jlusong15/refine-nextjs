@@ -39,7 +39,7 @@ export default function ApplicantCreatePage() {
 								...values,
 								availableStartDate: values.availableStartDate?.toISOString(),
 							},
-							invalidates: ["detail"],
+							invalidates: ["list"],
 						},
 						{
 							onSuccess: () => router.push(`/applicants`),

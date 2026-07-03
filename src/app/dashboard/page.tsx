@@ -41,11 +41,21 @@ export default function DashboardPage() {
 	const applicants = applicantsQuery.result?.data ?? []
 	const interviews = interviewsQuery.result?.data ?? []
 
-	if (applicantsQuery.query.isLoading || interviewsQuery.query.isLoading) {
+	if (
+		applicantsQuery.query.isLoading ||
+		interviewsQuery.query.isLoading ||
+		applicantsQuery.query.isRefetching ||
+		interviewsQuery.query.isRefetching
+	) {
 		return <Loading />
 	}
 
-	if (applicantsQuery.query.isError || interviewsQuery.query.isError) {
+	if (
+		applicantsQuery.query.isError ||
+		interviewsQuery.query.isError ||
+		applicantsQuery.query.isRefetchError ||
+		interviewsQuery.query.isRefetchError
+	) {
 		return <ErrorPage title={PAGE_NAME.DASHBOARD} />
 	}
 
