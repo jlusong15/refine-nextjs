@@ -1,9 +1,10 @@
-import { ToggleViewerStore } from "@/types/access-control.types"
+import { ACCESS_ROLES } from "@/constants/access.constants"
+import { ToggleViewerStore } from "@/types/toggle-viewer.types"
 import { create } from "zustand"
 
 export const useToggleViewerStore = create<ToggleViewerStore>((set) => ({
 	accessRoles: [],
-	currentViewer: "ADMIN",
+	currentViewer: ACCESS_ROLES.ADMIN,
 	setAccessRoles: (accessRoles) => set({ accessRoles }),
 	setCurrentViewer: (currentViewer) => set({ currentViewer }),
 }))

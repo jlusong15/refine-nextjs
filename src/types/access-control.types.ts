@@ -10,10 +10,3 @@ export interface AccessRolesState {
 	roleCode: RoleType
 	roleAccess: ActionType[],
 }
-
-export interface ToggleViewerStore {
-	accessRoles: AccessRolesState[]
-	currentViewer: RoleType
-	setAccessRoles: (roles: AccessRolesState[]) => void
-	setCurrentViewer: (value: RoleType) => void
-}

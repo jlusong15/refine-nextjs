@@ -4,6 +4,7 @@ import { BaseEntity } from "./strapi.types";
 
 export type ApplicantStatus =
 	(typeof APPLICANT_STATUS)[keyof typeof APPLICANT_STATUS];
+
 export interface Applicant extends BaseEntity {
 	fullName: string;
 	email: string;
