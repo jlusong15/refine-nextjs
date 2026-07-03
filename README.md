@@ -40,7 +40,7 @@ Before running the project, ensure you have the following installed:
 
 ```bash
 git clone <repository-url>
-cd <project-folder>
+cd refine-nextjs/
 ```
 
 ---
