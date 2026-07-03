@@ -2,7 +2,6 @@
 
 import DefaultPageLayout from "@/components/layout/DefaulPageLayout"
 import ErrorPage from "@/components/layout/ErrorPage"
-import CanAccess from "@/components/shared/CanAccess"
 import { DataTable } from "@/components/shared/DataTable"
 import { DataTablePagination } from "@/components/shared/DataTable/DataTablePagination"
 import { DataTableSearch } from "@/components/shared/DataTable/DataTableSearch"
@@ -12,15 +11,16 @@ import Loading from "@/components/shared/Loading"
 import MiniLoader from "@/components/shared/MiniLoader"
 import { Button } from "@/components/ui/button"
 import { ACCESS_ACTIONS } from "@/constants/access.constants"
+import { PAGE_NAME } from "@/constants/pages.constants"
+import { RESOURCE_NAME } from "@/constants/resource.constants"
 import { Applicant } from "@/types/applicants.types"
-import { useDelete, useTable } from "@refinedev/core"
+import { CanAccess, useDelete, useTable } from "@refinedev/core"
 import { Eye, Pencil, Plus, Trash2 } from "lucide-react"
 import { useState } from "react"
 import { toast } from "sonner"
 import { applicantTableColumns } from "./columns"
 
 export default function ApplicantsPage() {
-	const pageName = "Applicants"
 	const [selectedApplicant, setSelectedApplicant] = useState<Applicant | null>(null)
 	const {
 		mutate: deleteApplicant,
@@ -38,7 +38,7 @@ export default function ApplicantsPage() {
 		setFilters,
 		tableQuery: { isLoading, isFetching, isRefetching, error },
 	} = useTable<Applicant>({
-		resource: "applicants",
+		resource: RESOURCE_NAME.APPLICANTS,
 
 		pagination: {
 			currentPage: 1,
@@ -56,7 +56,7 @@ export default function ApplicantsPage() {
 	})
 
 	if (isLoading) return <Loading />
-	if (error) return <ErrorPage title={pageName} />
+	if (error) return <ErrorPage title={PAGE_NAME.APPLICANTS} />
 
 	const handleSearch = (value: string) => {
 		setSearch(value)
@@ -85,17 +85,17 @@ export default function ApplicantsPage() {
 
 	const actions = (applicant: Applicant) => (
 		<div className="flex justify-end gap-2">
-			<CanAccess action={ACCESS_ACTIONS.VIEW}>
+			<CanAccess resource={RESOURCE_NAME.APPLICANTS} action={ACCESS_ACTIONS.VIEW}>
 				<LinkButton href={`/applicants/${applicant.documentId}`} variant="ghost" size="icon">
 					<Eye className="h-4 w-4" />
 				</LinkButton>
 			</CanAccess>
-			<CanAccess action={ACCESS_ACTIONS.UPDATE}>
+			<CanAccess resource={RESOURCE_NAME.APPLICANTS} action={ACCESS_ACTIONS.UPDATE}>
 				<LinkButton href={`/applicants/edit/${applicant.documentId}`} variant="ghost" size="icon">
 					<Pencil className="h-4 w-4" />
 				</LinkButton>
 			</CanAccess>
-			<CanAccess action={ACCESS_ACTIONS.DELETE}>
+			<CanAccess resource={RESOURCE_NAME.APPLICANTS} action={ACCESS_ACTIONS.DELETE}>
 				<Button variant="ghost" size="icon" title="Delete" onClick={() => setSelectedApplicant(applicant)}>
 					<Trash2 className="h-4 w-4 text-destructive" />
 				</Button>
@@ -108,7 +108,7 @@ export default function ApplicantsPage() {
 
 		deleteApplicant(
 			{
-				resource: "applicants",
+				resource: RESOURCE_NAME.APPLICANTS,
 				id: selectedApplicant.documentId,
 				invalidates: ["list"],
 			},
@@ -131,10 +131,10 @@ export default function ApplicantsPage() {
 	}
 
 	return (
-		<DefaultPageLayout title={pageName}>
+		<DefaultPageLayout title={PAGE_NAME.APPLICANTS}>
 			<div className="space-y-4">
 				<div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-					<CanAccess action={ACCESS_ACTIONS.CREATE}>
+					<CanAccess resource={RESOURCE_NAME.APPLICANTS} action={ACCESS_ACTIONS.CREATE}>
 						<LinkButton href="/applicants/create" className="w-full sm:w-auto" disabled={isFetching || isRefetching}>
 							<Plus className="h-4 w-4" />
 							Create Applicant

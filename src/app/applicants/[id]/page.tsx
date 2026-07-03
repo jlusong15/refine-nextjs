@@ -10,17 +10,16 @@ import MiniLoader from "@/components/shared/MiniLoader"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Table, TableBody } from "@/components/ui/table"
+import { ACCESS_ACTIONS } from "@/constants/access.constants"
+import { RESOURCE_NAME } from "@/constants/resource.constants"
 import { formatCurrency, formatDateTime } from "@/lib/format"
 import { Applicant } from "@/types/applicants.types"
-import { useDelete, useList, useShow } from "@refinedev/core"
+import { CanAccess, useDelete, useList, useShow } from "@refinedev/core"
 import { CalendarPlus, ChevronLeft, Pencil, Trash2 } from "lucide-react"
 import { useParams, useRouter } from "next/navigation"
-import { useState } from "react"
+import React, { useState } from "react"
 import { toast } from "sonner"
 import CreateInterviewDialog from "./CreateInterviewDialog"
-import React from "react"
-import { ACCESS_ACTIONS } from "@/constants/access.constants"
-import CanAccess from "@/components/shared/CanAccess"
 
 export default function ApplicantDetailsPage() {
 	const router = useRouter()
@@ -29,11 +28,11 @@ export default function ApplicantDetailsPage() {
 	const params = useParams()
 	const id = params.id as string
 	const { query } = useShow<Applicant>({
-		resource: "applicants",
+		resource: RESOURCE_NAME.APPLICANTS,
 		id,
 	})
 	const { result: resultQuery, query: interviewsQuery } = useList({
-		resource: "interviews",
+		resource: RESOURCE_NAME.INTERVIEWS,
 		pagination: {
 			mode: "off",
 		},
@@ -67,7 +66,7 @@ export default function ApplicantDetailsPage() {
 
 		deleteApplicant(
 			{
-				resource: "applicants",
+				resource: RESOURCE_NAME.APPLICANTS,
 				id: applicant.documentId,
 				invalidates: ["list"],
 			},
@@ -96,14 +95,14 @@ export default function ApplicantDetailsPage() {
 				<div className="flex flex-col gap-2 sm:flex-row sm:items-center">
 					{isDeleting && <MiniLoader />}
 
-					<CanAccess action={ACCESS_ACTIONS.CREATE}>
+					<CanAccess resource={RESOURCE_NAME.APPLICANTS} action={ACCESS_ACTIONS.CREATE}>
 						<Button className="w-full sm:w-auto" disabled={isDeleting} onClick={() => setIsInterviewDialogOpen(true)}>
 							<CalendarPlus />
 							Schedule Interview
 						</Button>
 					</CanAccess>
 
-					<CanAccess action={ACCESS_ACTIONS.UPDATE}>
+					<CanAccess resource={RESOURCE_NAME.APPLICANTS} action={ACCESS_ACTIONS.UPDATE}>
 						<LinkButton
 							href={`/applicants/edit/${applicant.documentId}`}
 							className="w-full sm:w-auto"
@@ -114,7 +113,7 @@ export default function ApplicantDetailsPage() {
 						</LinkButton>
 					</CanAccess>
 
-					<CanAccess action={ACCESS_ACTIONS.DELETE}>
+					<CanAccess resource={RESOURCE_NAME.APPLICANTS} action={ACCESS_ACTIONS.DELETE}>
 						<Button variant="destructive" className="w-full sm:w-auto" onClick={handleDelete} disabled={isDeleting}>
 							<Trash2 />
 							Delete

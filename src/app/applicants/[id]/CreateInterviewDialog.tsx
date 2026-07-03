@@ -5,6 +5,7 @@ import { InterviewFormValues } from "@/schemas/interview.schema"
 import { useCreate } from "@refinedev/core"
 import { toast } from "sonner"
 import { CreateInterviewForm } from "./CreateInterviewForm"
+import { RESOURCE_NAME } from "@/constants/resource.constants"
 
 type Props = {
 	open: boolean
@@ -21,7 +22,7 @@ export default function CreateInterviewDialog({ open, onOpenChange, applicantId 
 	const handleSubmit = (values: InterviewFormValues) => {
 		createInterview(
 			{
-				resource: "interviews",
+				resource: RESOURCE_NAME.INTERVIEWS,
 				values: {
 					...values,
 					applicant: applicantId,

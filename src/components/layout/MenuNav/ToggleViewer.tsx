@@ -2,32 +2,30 @@
 
 import { useToggleViewerStore } from "@/components/store/toggle-viewer.store"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { useList } from "@refinedev/core"
-import { useEffect } from "react"
+import { RoleType } from "@/types/access-control.types"
+import { useQueryClient } from "@tanstack/react-query"
 
 export default function ToggleViewer() {
-	
-	const { result } = useList({
-		resource: "access-controls",
-		pagination: {
-			mode: "off",
-		},
-	})
-	const { accessRoles, currentViewer, setAccessRoles, setCurrentViewer } = useToggleViewerStore()
+	const queryClient = useQueryClient()
+	const accessRoles = useToggleViewerStore((s) => s.accessRoles)
+	const currentViewer = useToggleViewerStore((s) => s.currentViewer)
+	const setCurrentViewer = useToggleViewerStore((s) => s.setCurrentViewer)
 
-	useEffect(() => {
-		if (!result?.data) return
-
-		setAccessRoles(
-			result.data.map((item) => ({
-				roleCode: item.roleCode,
-				roleAccess: item.roleAccess,
-			})),
+	const handleChange = (value: RoleType) => {
+		setCurrentViewer(value)
+		console.table(
+			queryClient
+				.getQueryCache()
+				.getAll()
+				.map((q) => q.queryKey),
 		)
-	}, [result?.data, setAccessRoles])
+		queryClient.invalidateQueries({
+			predicate: (query) => query.queryKey[0] === "access",
+		})
+	}
 
 	return (
-		<Select value={currentViewer} onValueChange={setCurrentViewer}>
+		<Select value={currentViewer} onValueChange={handleChange}>
 			<SelectTrigger className="w-40">
 				<SelectValue />
 			</SelectTrigger>

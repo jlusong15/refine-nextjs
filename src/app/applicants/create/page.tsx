@@ -2,6 +2,7 @@
 
 import DefaultPageLayout from "@/components/layout/DefaulPageLayout"
 import { APPLICANT_STATUS } from "@/constants/applicant.constants"
+import { RESOURCE_NAME } from "@/constants/resource.constants"
 import { useCreate } from "@refinedev/core"
 import { useRouter } from "next/navigation"
 import { CreateApplicantForm } from "./CreateApplicantForm"
@@ -33,7 +34,7 @@ export default function ApplicantCreatePage() {
 				onSubmit={(values) =>
 					mutate(
 						{
-							resource: "applicants",
+							resource: RESOURCE_NAME.APPLICANTS,
 							values: {
 								...values,
 								availableStartDate: values.availableStartDate?.toISOString(),

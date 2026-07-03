@@ -3,6 +3,7 @@
 import DefaultPageLayout from "@/components/layout/DefaulPageLayout"
 import ErrorPage from "@/components/layout/ErrorPage"
 import Loading from "@/components/shared/Loading"
+import { RESOURCE_NAME } from "@/constants/resource.constants"
 import { Applicant } from "@/types/applicants.types"
 import { useShow, useUpdate } from "@refinedev/core"
 import { useParams, useRouter } from "next/navigation"
@@ -10,11 +11,9 @@ import { EditApplicantForm } from "./EditApplicantForm"
 
 export default function ApplicantEditPage() {
 	const { id } = useParams<{ id: string }>()
-
 	const router = useRouter()
-
 	const { query } = useShow<Applicant>({
-		resource: "applicants",
+		resource: RESOURCE_NAME.APPLICANTS,
 		id,
 	})
 
@@ -51,7 +50,7 @@ export default function ApplicantEditPage() {
 				onSubmit={(values) =>
 					mutate(
 						{
-							resource: "applicants",
+							resource: RESOURCE_NAME.APPLICANTS,
 							id,
 							values: {
 								...values,
