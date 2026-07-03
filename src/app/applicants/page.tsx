@@ -17,6 +17,7 @@ import { toast } from "sonner"
 import { applicantTableColumns } from "./columns"
 
 import DeleteConfirmationDialog from "@/components/shared/DeleteConfirmationDialog"
+import { useToggleViewerStore } from "@/components/store/toggle-viewer.store"
 
 export default function ApplicantsPage() {
 	const pageName = "Applicants"
@@ -53,6 +54,8 @@ export default function ApplicantsPage() {
 			],
 		},
 	})
+	const selectedRole = useToggleViewerStore((state) => state.selectedValue)
+	const optionsRole = useToggleViewerStore((state) => state.options)
 
 	if (isLoading) return <Loading />
 	if (error) return <ErrorPage title={pageName} />

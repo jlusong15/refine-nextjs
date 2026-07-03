@@ -1,44 +1,42 @@
 "use client"
 
+import { useToggleViewerStore } from "@/components/store/toggle-viewer.store"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useList } from "@refinedev/core"
-import { useMemo, useState } from "react"
+import { useEffect } from "react"
 
 export default function ToggleViewer() {
-	const [value, setValue] = useState("ADMIN")
-
-	const { result: accessControls, query } = useList({
+	const { result } = useList({
 		resource: "access-controls",
 		pagination: {
 			mode: "off",
 		},
 	})
+	const { options, selectedValue, setOptions, setSelectedValue } = useToggleViewerStore()
 
-	const options = useMemo(
-		() =>
-			(accessControls?.data ?? []).map((item) => ({
+	useEffect(() => {
+		if (!result?.data) return
+
+		setOptions(
+			result.data.map((item) => ({
 				label: item.roleCode,
 				value: item.roleCode,
 			})),
-		[accessControls],
-	)
+		)
+	}, [result?.data, setOptions])
 
 	return (
-		<Select value={value} onValueChange={setValue}>
-			<SelectTrigger className="w-48 text-white border-white/20 bg-transparent cursor-pointer">
+		<Select value={selectedValue} onValueChange={setSelectedValue}>
+			<SelectTrigger className="w-40">
 				<SelectValue />
 			</SelectTrigger>
 
 			<SelectContent>
-				{query.isLoading ? (
-					<SelectItem value="ADMIN">ADMIN</SelectItem>
-				) : (
-					options.map((option) => (
-						<SelectItem key={option.value} value={option.value}>
-							{option.label}
-						</SelectItem>
-					))
-				)}
+				{options.map((option) => (
+					<SelectItem key={option.value} value={option.value}>
+						{option.label}
+					</SelectItem>
+				))}
 			</SelectContent>
 		</Select>
 	)
