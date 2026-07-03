@@ -4,7 +4,7 @@ import { create } from "zustand"
 
 export const useToggleViewerStore = create<ToggleViewerStore>((set) => ({
 	accessRoles: [],
-	currentViewer: ACCESS_ROLES.ADMIN,
+	currentViewer: ACCESS_ROLES.RECRUITER,
 	setAccessRoles: (accessRoles) => set({ accessRoles }),
 	setCurrentViewer: (currentViewer) => set({ currentViewer }),
 }))

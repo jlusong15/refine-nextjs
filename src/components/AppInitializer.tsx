@@ -12,7 +12,7 @@ type Props = {
 
 export default function AppInitializer({ children }: Props) {
 	const setAccessRoles = useToggleViewerStore((s) => s.setAccessRoles)
-
+	const accessRoles = useToggleViewerStore.getState().accessRoles
 	const { result, query } = useList({
 		resource: RESOURCE_NAME.ACCESS_CONTROL,
 		pagination: {
@@ -31,7 +31,7 @@ export default function AppInitializer({ children }: Props) {
 		)
 	}, [result?.data, setAccessRoles])
 
-	if (query.isLoading) {
+	if (query.isLoading || accessRoles.length === 0) {
 		return <Loading />
 	}
 
