@@ -54,8 +54,10 @@ export default function ApplicantsPage() {
 			],
 		},
 	})
-	const selectedRole = useToggleViewerStore((state) => state.selectedValue)
-	const optionsRole = useToggleViewerStore((state) => state.options)
+	/** Testing */
+	const currentViewer = useToggleViewerStore((state) => state.currentViewer)
+	const accessRoles = useToggleViewerStore((state) => state.accessRoles)
+	console.log(currentViewer, accessRoles)
 
 	if (isLoading) return <Loading />
 	if (error) return <ErrorPage title={pageName} />

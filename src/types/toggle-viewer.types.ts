@@ -4,8 +4,8 @@ export type ToggleViewerOption = {
 }
 
 export type ToggleViewerStore = {
-	options: ToggleViewerOption[]
-	selectedValue: string
-	setOptions: (options: ToggleViewerOption[]) => void
-	setSelectedValue: (value: string) => void
+	accessRoles: ToggleViewerOption[]
+	currentViewer: string
+	setAccessRoles: (options: ToggleViewerOption[]) => void
+	setCurrentViewer: (value: string) => void
 }

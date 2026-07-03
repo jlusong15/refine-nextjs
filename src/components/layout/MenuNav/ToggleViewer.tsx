@@ -12,27 +12,27 @@ export default function ToggleViewer() {
 			mode: "off",
 		},
 	})
-	const { options, selectedValue, setOptions, setSelectedValue } = useToggleViewerStore()
+	const { accessRoles, currentViewer, setAccessRoles, setCurrentViewer } = useToggleViewerStore()
 
 	useEffect(() => {
 		if (!result?.data) return
 
-		setOptions(
+		setAccessRoles(
 			result.data.map((item) => ({
 				label: item.roleCode,
 				value: item.roleCode,
 			})),
 		)
-	}, [result?.data, setOptions])
+	}, [result?.data, setAccessRoles])
 
 	return (
-		<Select value={selectedValue} onValueChange={setSelectedValue}>
+		<Select value={currentViewer} onValueChange={setCurrentViewer}>
 			<SelectTrigger className="w-40">
 				<SelectValue />
 			</SelectTrigger>
 
 			<SelectContent>
-				{options.map((option) => (
+				{accessRoles.map((option) => (
 					<SelectItem key={option.value} value={option.value}>
 						{option.label}
 					</SelectItem>
