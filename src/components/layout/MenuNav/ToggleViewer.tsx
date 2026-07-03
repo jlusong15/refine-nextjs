@@ -6,6 +6,7 @@ import { useList } from "@refinedev/core"
 import { useEffect } from "react"
 
 export default function ToggleViewer() {
+	
 	const { result } = useList({
 		resource: "access-controls",
 		pagination: {
@@ -19,8 +20,8 @@ export default function ToggleViewer() {
 
 		setAccessRoles(
 			result.data.map((item) => ({
-				label: item.roleCode,
-				value: item.roleCode,
+				roleCode: item.roleCode,
+				roleAccess: item.roleAccess,
 			})),
 		)
 	}, [result?.data, setAccessRoles])
@@ -33,8 +34,8 @@ export default function ToggleViewer() {
 
 			<SelectContent>
 				{accessRoles.map((option) => (
-					<SelectItem key={option.value} value={option.value}>
-						{option.label}
+					<SelectItem key={option.roleCode} value={option.roleCode}>
+						{option.roleCode}
 					</SelectItem>
 				))}
 			</SelectContent>

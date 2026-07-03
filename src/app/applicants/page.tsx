@@ -18,6 +18,8 @@ import { applicantTableColumns } from "./columns"
 
 import DeleteConfirmationDialog from "@/components/shared/DeleteConfirmationDialog"
 import { useToggleViewerStore } from "@/components/store/toggle-viewer.store"
+import useAccess from "@/hooks/useAccess"
+import CanAccess from "@/components/shared/CanAccess"
 
 export default function ApplicantsPage() {
 	const pageName = "Applicants"
@@ -59,6 +61,13 @@ export default function ApplicantsPage() {
 	const accessRoles = useToggleViewerStore((state) => state.accessRoles)
 	console.log(currentViewer, accessRoles)
 
+	const { hasAccess } = useAccess()
+
+	console.log("@@@ CREATE", hasAccess("CREATE"))
+	console.log("@@@ VIEW", hasAccess("VIEW"))
+	console.log("@@@ UPDATE", hasAccess("UPDATE"))
+	console.log("@@@ DELETE", hasAccess("DELETE"))
+
 	if (isLoading) return <Loading />
 	if (error) return <ErrorPage title={pageName} />
 
@@ -89,15 +98,21 @@ export default function ApplicantsPage() {
 
 	const actions = (applicant: Applicant) => (
 		<div className="flex justify-end gap-2">
-			<LinkButton href={`/applicants/${applicant.documentId}`} variant="ghost" size="icon">
-				<Eye className="h-4 w-4" />
-			</LinkButton>
-			<LinkButton href={`/applicants/edit/${applicant.documentId}`} variant="ghost" size="icon">
-				<Pencil className="h-4 w-4" />
-			</LinkButton>
-			<Button variant="ghost" size="icon" title="Delete" onClick={() => setSelectedApplicant(applicant)}>
-				<Trash2 className="h-4 w-4 text-destructive" />
-			</Button>
+			<CanAccess action="VIEW">
+				<LinkButton href={`/applicants/${applicant.documentId}`} variant="ghost" size="icon">
+					<Eye className="h-4 w-4" />
+				</LinkButton>
+			</CanAccess>
+			<CanAccess action="UPDATE">
+				<LinkButton href={`/applicants/edit/${applicant.documentId}`} variant="ghost" size="icon">
+					<Pencil className="h-4 w-4" />
+				</LinkButton>
+			</CanAccess>
+			<CanAccess action="DELETE">
+				<Button variant="ghost" size="icon" title="Delete" onClick={() => setSelectedApplicant(applicant)}>
+					<Trash2 className="h-4 w-4 text-destructive" />
+				</Button>
+			</CanAccess>
 		</div>
 	)
 
@@ -132,10 +147,12 @@ export default function ApplicantsPage() {
 		<DefaultPageLayout title={pageName}>
 			<div className="space-y-4">
 				<div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-					<LinkButton href="/applicants/create" className="w-full sm:w-auto" disabled={isFetching || isRefetching}>
-						<Plus className="h-4 w-4" />
-						Create Applicant
-					</LinkButton>
+					<CanAccess action="CREATE">
+						<LinkButton href="/applicants/create" className="w-full sm:w-auto" disabled={isFetching || isRefetching}>
+							<Plus className="h-4 w-4" />
+							Create Applicant
+						</LinkButton>
+					</CanAccess>
 
 					<div className="flex w-full items-center gap-2 sm:w-auto">
 						{(isFetching || isRefetching) && <MiniLoader />}
