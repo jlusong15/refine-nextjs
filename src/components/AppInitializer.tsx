@@ -30,7 +30,8 @@ export default function AppInitializer({ children }: Props) {
 				roleAccess: item.roleAccess,
 			})),
 		)
-	}, [result?.data, setAccessRoles])
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [result?.data])
 
 	if (query.isLoading || accessRoles.length === 0) {
 		return <Loading />

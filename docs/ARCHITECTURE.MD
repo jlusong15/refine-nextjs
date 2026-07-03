@@ -10,7 +10,7 @@
 
 
 ## API Integration Approach
-* **Backend API** – The application communicates with a Strapi REST API hosted in a shared **test environment on Railway**.
+* **Backend API** – The (local & dev FE) application communicates with a Strapi REST API hosted in a shared **test environment on Railway**.
 * **Data Provider** – API communication is centralized through Refine's `dataProvider`, which is configured with the Strapi Data Provider to enable resource-based CRUD operations.
 * **Database** – The Strapi backend is connected to a **PostgreSQL database hosted on Supabase**.
 * **Data Provider** – Refine's Strapi data provider is used to simplify CRUD operations and resource management.
@@ -28,7 +28,7 @@ The application uses Refine's `accessControlProvider` to demonstrate role-based 
 | **RECRUITER**   | View, Create, Update         |
 | **INTERVIEWER** | View                         |
 
-These roles are used to conditionally display pages, actions, and UI elements throughout the application based on the current user's assigned permissions.
+These roles are used to conditionally display pages, actions, and UI elements throughout the application based on the current user's assigned permissions. By default, the application initializes with the **ADMIN** role. For demonstration purposes, the active role can be changed through the `toggle-viewer.store.ts` Zustand store.
 
 
 ## Challenges Encountered
