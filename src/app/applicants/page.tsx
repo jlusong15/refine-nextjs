@@ -12,11 +12,12 @@ import { Button } from "@/components/ui/button"
 import { ACCESS_ACTIONS } from "@/constants/access.constants"
 import { PAGE_NAME } from "@/constants/pages.constants"
 import { RESOURCE_NAME } from "@/constants/resource.constants"
+import { useDebounce } from "@/hooks/useDebounce"
 import { Applicant } from "@/types/applicants.types"
 import { CanAccess, useDelete, useTable } from "@refinedev/core"
 import { Eye, Pencil, Plus, Trash2 } from "lucide-react"
 import dynamic from "next/dynamic"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { toast } from "sonner"
 import { applicantTableColumns } from "./columns"
 
@@ -29,6 +30,7 @@ export default function ApplicantsPage() {
 		mutation: { isPending: isDeleting },
 	} = useDelete()
 	const [search, setSearch] = useState("")
+	const debouncedSearch = useDebounce(search, 500)
 	const {
 		result,
 		currentPage,
@@ -55,25 +57,24 @@ export default function ApplicantsPage() {
 		},
 	})
 
-	if (isLoading) return <Loading />
-	if (error) return <ErrorPage title={PAGE_NAME.APPLICANTS} />
-
-	const handleSearch = (value: string) => {
-		setSearch(value)
+	useEffect(() => {
 		setFilters(
-			value
+			debouncedSearch
 				? [
 						{
 							field: "fullName",
 							operator: "contains",
-							value,
+							value: debouncedSearch,
 						},
 					]
 				: [],
 			"replace",
 		)
 		setCurrentPage(1)
-	}
+	}, [debouncedSearch, setFilters, setCurrentPage])
+
+	if (isLoading) return <Loading />
+	if (error) return <ErrorPage title={PAGE_NAME.APPLICANTS} />
 
 	const handleSort = (field: keyof Applicant) => {
 		setSorters([
@@ -149,7 +150,7 @@ export default function ApplicantsPage() {
 						<DataTableSearch
 							className="w-full sm:w-80"
 							value={search}
-							onChange={handleSearch}
+							onChange={setSearch}
 							placeholder="Search applicant name..."
 							disabled={isFetching || isRefetching}
 						/>

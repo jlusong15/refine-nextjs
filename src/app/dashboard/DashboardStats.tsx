@@ -13,6 +13,7 @@ type DashboardStatsProps = {
 }
 
 export default function DashboardStats({ applicants, interviews }: DashboardStatsProps) {
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const today = new Date()
 	const upcomingInterviews = useMemo(() => {
 		return interviews?.filter((interview) => new Date(interview?.interviewDate) >= today) ?? []

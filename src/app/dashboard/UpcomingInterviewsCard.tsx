@@ -11,6 +11,7 @@ type UpcomingInterviewsCardProps = {
 }
 
 export default function UpcomingInterviewsCard({ interviews }: UpcomingInterviewsCardProps) {
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const today = new Date()
 	const interviewList = useMemo(() => {
 		return [...(interviews ?? [])]
