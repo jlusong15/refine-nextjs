@@ -6,7 +6,7 @@
 * **Global Client State** – Managed with Zustand to mock user authentication by allowing developers to toggle (View as) between authenticated and unauthenticated views during development.
 * **Form Management** – Built with React Hook Form for performant form handling.
 * **Validation** – Uses Zod for schema-based validation and end-to-end type safety.
-* **Theming** – Implements a centralized color theme system using Tailwind CSS and shadcn/ui design tokens for consistent and maintainable styling across the application.
+* **Theming & Responsiveness** – Implements a centralized color theme system using Tailwind CSS and shadcn/ui design tokens for consistent, maintainable styling, while leveraging Tailwind's responsive utility classes to provide an optimized user experience across desktop, tablet, and mobile devices.
 
 
 ## API Integration Approach
