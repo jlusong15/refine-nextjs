@@ -2,7 +2,6 @@
 
 import DefaultPageLayout from "@/components/layout/DefaulPageLayout"
 import ErrorPage from "@/components/layout/ErrorPage"
-import DeleteConfirmationDialog from "@/components/shared/DeleteConfirmationDialog"
 import DetailsRow from "@/components/shared/DetailsRow"
 import LinkButton from "@/components/shared/LinkButton"
 import Loading from "@/components/shared/Loading"
@@ -17,10 +16,13 @@ import { Applicant } from "@/types/applicants.types"
 import { Interview } from "@/types/interview.types"
 import { CanAccess, useDelete, useList, useShow } from "@refinedev/core"
 import { CalendarPlus, ChevronLeft, Pencil, Trash2 } from "lucide-react"
+import dynamic from "next/dynamic"
 import { useParams, useRouter } from "next/navigation"
 import React, { useState } from "react"
 import { toast } from "sonner"
 import CreateInterviewDialog from "./CreateInterviewDialog"
+
+const DeleteConfirmationDialog = dynamic(() => import("@/components/shared/DeleteConfirmationDialog"))
 
 export default function ApplicantDetailsPage() {
 	const router = useRouter()

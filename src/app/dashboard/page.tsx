@@ -8,10 +8,20 @@ import { RESOURCE_NAME } from "@/constants/resource.constants"
 import { Applicant } from "@/types/applicants.types"
 import { Interview } from "@/types/interview.types"
 import { useList } from "@refinedev/core"
-import ApplicantStatusChart from "./ApplicantStatusChart"
+import dynamic from "next/dynamic"
 import DashboardStats from "./DashboardStats"
-import RecentApplicantsCard from "./RecentApplicantsCard"
-import UpcomingInterviewsCard from "./UpcomingInterviewsCard"
+
+const ApplicantStatusChart = dynamic(() => import("./ApplicantStatusChart"), {
+	loading: () => <Loading />,
+})
+
+const UpcomingInterviewsCard = dynamic(() => import("./UpcomingInterviewsCard"), {
+	loading: () => <Loading />,
+})
+
+const RecentApplicantsCard = dynamic(() => import("./RecentApplicantsCard"), {
+	loading: () => <Loading />,
+})
 
 export default function DashboardPage() {
 	const applicantsQuery = useList<Applicant>({
@@ -20,6 +30,7 @@ export default function DashboardPage() {
 			mode: "off",
 		},
 	})
+
 	const interviewsQuery = useList<Interview>({
 		resource: RESOURCE_NAME.INTERVIEWS,
 		pagination: {
@@ -33,6 +44,7 @@ export default function DashboardPage() {
 	if (applicantsQuery.query.isLoading || interviewsQuery.query.isLoading) {
 		return <Loading />
 	}
+
 	if (applicantsQuery.query.isError || interviewsQuery.query.isError) {
 		return <ErrorPage title={PAGE_NAME.DASHBOARD} />
 	}
@@ -44,18 +56,14 @@ export default function DashboardPage() {
 					<p className="text-muted-foreground">Welcome back! Here's an overview of your recruitment pipeline.</p>
 				</div>
 
-				<div>
-					<DashboardStats applicants={applicants} interviews={interviews} />
-				</div>
+				<DashboardStats applicants={applicants} interviews={interviews} />
 
 				<div className="grid gap-6 lg:grid-cols-2">
 					<ApplicantStatusChart applicants={applicants} />
 					<UpcomingInterviewsCard interviews={interviews} />
 				</div>
 
-				<div>
-					<RecentApplicantsCard applicants={applicants} />
-				</div>
+				<RecentApplicantsCard applicants={applicants} />
 			</div>
 		</DefaultPageLayout>
 	)

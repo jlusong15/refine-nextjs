@@ -5,7 +5,6 @@ import ErrorPage from "@/components/layout/ErrorPage"
 import { DataTable } from "@/components/shared/DataTable"
 import { DataTablePagination } from "@/components/shared/DataTable/DataTablePagination"
 import { DataTableSearch } from "@/components/shared/DataTable/DataTableSearch"
-import DeleteConfirmationDialog from "@/components/shared/DeleteConfirmationDialog"
 import LinkButton from "@/components/shared/LinkButton"
 import Loading from "@/components/shared/Loading"
 import MiniLoader from "@/components/shared/MiniLoader"
@@ -16,9 +15,12 @@ import { RESOURCE_NAME } from "@/constants/resource.constants"
 import { Applicant } from "@/types/applicants.types"
 import { CanAccess, useDelete, useTable } from "@refinedev/core"
 import { Eye, Pencil, Plus, Trash2 } from "lucide-react"
+import dynamic from "next/dynamic"
 import { useState } from "react"
 import { toast } from "sonner"
 import { applicantTableColumns } from "./columns"
+
+const DeleteConfirmationDialog = dynamic(() => import("@/components/shared/DeleteConfirmationDialog"))
 
 export default function ApplicantsPage() {
 	const [selectedApplicant, setSelectedApplicant] = useState<Applicant | null>(null)
