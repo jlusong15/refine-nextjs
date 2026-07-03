@@ -44,9 +44,6 @@ export default function DashboardStats({ applicants, interviews }: DashboardStat
 		},
 	]
 
-	console.log('applicants', applicants)
-	console.log('hiredApplicants', hiredApplicants)
-
 	return (
 		<div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
 			{stats.map((stat) => {

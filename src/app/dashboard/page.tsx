@@ -17,32 +17,20 @@ export default function DashboardPage() {
 	const applicantsQuery = useList<Applicant>({
 		resource: RESOURCE_NAME.APPLICANTS,
 		pagination: {
-			mode: "off",
+			currentPage: 1,
+			pageSize: 100000,
 		},
-		meta: {
-        pagination: {
-            page: 1,
-            pageSize: -1,
-        },
-    },
 	})
 	const interviewsQuery = useList<Interview>({
 		resource: RESOURCE_NAME.INTERVIEWS,
 		pagination: {
-			mode: "off",
+			currentPage: 1,
+			pageSize: 100000,
 		},
-		meta: {
-        pagination: {
-            page: 1,
-            pageSize: -1,
-        },
-    },
 	})
 
 	const applicants = applicantsQuery.result?.data ?? []
 	const interviews = interviewsQuery.result?.data ?? []
-	console.log('applicantsQuery.result?.dat', applicantsQuery.result?.data)
-	console.log('applicants', applicants)
 
 	if (applicantsQuery.query.isLoading || interviewsQuery.query.isLoading) {
 		return <Loading />

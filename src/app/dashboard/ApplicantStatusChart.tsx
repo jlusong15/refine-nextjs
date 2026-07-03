@@ -16,7 +16,7 @@ export default function ApplicantStatusChart({ applicants }: ApplicantStatusChar
 		status,
 		total: applicants.filter((applicant) => applicant.applicationStatus === status).length,
 	}))
-	console.log("primaryColor", primaryColor)
+
 	return (
 		<Card>
 			<CardHeader>

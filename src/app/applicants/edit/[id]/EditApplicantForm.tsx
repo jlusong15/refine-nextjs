@@ -128,7 +128,7 @@ export function EditApplicantForm({ defaultValues, cancelAction, onSubmit, isLoa
 						<FormItem>
 							<FormLabel>Expected Salary</FormLabel>
 							<FormControl>
-								<Input type="number" {...field} onChange={(e) => field.onChange(Number(e.target.value))} />
+								<InputNumber value={field?.value ?? null} onChange={field.onChange} />
 							</FormControl>
 							<FormMessage />
 						</FormItem>
