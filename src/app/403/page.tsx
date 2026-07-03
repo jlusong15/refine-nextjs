@@ -14,7 +14,7 @@ export default function ForbiddenPage() {
 				<h1 className="text-5xl font-bold tracking-tight">403</h1>
 				<h2 className="mt-4 text-2xl font-semibold">Access Denied</h2>
 				<p className="mt-3 text-muted-foreground">
-					You don't have permission to access this page. Please switch to a viewer with the required access or return to
+					You do not have permission to access this page. Please switch to a viewer with the required access or return to
 					the previous page.
 				</p>
 				<div className="mt-8 flex justify-center gap-3">

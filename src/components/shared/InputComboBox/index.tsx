@@ -93,11 +93,7 @@ export function InputMultiComboBox({
 
 			<PopoverContent className="w-[--radix-popover-trigger-width] p-0">
 				<Command shouldFilter={false}>
-					<CommandInput
-						placeholder="Type here..."
-						value={search}
-						onValueChange={setSearch}
-					/>
+					<CommandInput placeholder="Type here..." value={search} onValueChange={setSearch} />
 
 					<CommandList>
 						<CommandEmpty>No results.</CommandEmpty>
@@ -123,7 +119,7 @@ export function InputMultiComboBox({
 							{!exists && search.trim() && (
 								<CommandItem onSelect={handleCreate} className="cursor-pointer">
 									<Plus className="mr-2 h-4 w-4" />
-									Add "{search}"
+									Add {search}
 								</CommandItem>
 							)}
 						</CommandGroup>

@@ -1,4 +1,4 @@
-import { BookA, ChartBarStacked, House, LucideIcon, Rss } from "lucide-react";
+import { LucideIcon } from "lucide-react";
 
 export interface NavModel {
 	name: string
@@ -9,5 +9,4 @@ export interface NavModel {
 export const NavLinks = [
 	{ name: 'Dashboard', route: '/' },
 	{ name: 'Applicants', route: '/applicants' },
-	// { name: 'Interviews', route: '/interviews' },
 ];

@@ -1,36 +1,177 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Applicant Tracking Dashboard
 
-## Getting Started
+A recruitment management system built with **Next.js**, **Refine**, **Strapi**, **TypeScript**, **Tailwind CSS**, and **shadcn/ui**.
 
-First, run the development server:
+## Tech Stack
+
+### Frontend
+
+* Next.js
+* React
+* TypeScript
+* Refine
+* TanStack Query
+* Zustand
+* Tailwind CSS
+* shadcn/ui
+* React Hook Form
+* Zod
+* Axios
+
+### Backend
+
+* Strapi v4
+* PostgreSQL
+
+---
+
+# Prerequisites
+
+Before running the project, ensure you have the following installed:
+
+* Node.js 20 or later
+* npm
+* Git
+
+---
+
+# Getting Started
+
+## 1. Clone the Repository
+
+```bash
+git clone <repository-url>
+cd <project-folder>
+```
+
+---
+
+## 2. Install Dependencies
+
+```bash
+npm install
+```
+
+---
+
+## 3. Configure Environment Variables
+
+Create a `.env.local` file in the project root.
+
+```env
+NEXT_PUBLIC_STRAPI_URL=https://your-test-api.example.com
+NEXT_PUBLIC_STRAPI_TOKEN=your-strapi-api-token
+```
+
+### Required Environment Variables
+
+| Variable                   | Description                                                    |
+| -------------------------- | -------------------------------------------------------------- |
+| `NEXT_PUBLIC_STRAPI_URL`   | Base URL of the shared Strapi Test Environment API.            |
+| `NEXT_PUBLIC_STRAPI_TOKEN` | Strapi API token used to authenticate requests to the backend. |
+
+> **Note:** Restart the development server after creating or updating the `.env.local` file.
+
+---
+
+## 4. Start the Development Server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open the application at:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+# Backend Setup
 
-To learn more about Next.js, take a look at the following resources:
+This project connects to a **shared Strapi Test Environment**.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+A local Strapi installation is **not required**.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Configure the following environment variables:
 
-## Deploy on Vercel
+```env
+NEXT_PUBLIC_STRAPI_URL=https://your-test-api.example.com
+NEXT_PUBLIC_STRAPI_TOKEN=your-strapi-api-token
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Once configured, the frontend will automatically connect to the shared backend.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+# State Management
+
+The application uses **Zustand** for lightweight global state management.
+
+### Current Usage
+
+Zustand is currently used to manage the application's **mock login state**, allowing developers to quickly switch between authenticated and unauthenticated views without integrating a real authentication provider.
+
+This functionality is intended for development, testing, and demonstration purposes.
+
+---
+
+# Available Scripts
+
+### Start the development server
+
+```bash
+npm run dev
+```
+
+### Build the application
+
+```bash
+npm run build
+```
+
+### Start the production server
+
+```bash
+npm run start
+```
+
+---
+
+# Project Structure
+
+```
+src/
+├── app/
+├── components/
+├── constants/
+├── hooks/
+├── lib/
+├── providers/
+├── stores/
+├── types/
+└── utils/
+```
+
+---
+
+# Troubleshooting
+
+## Environment variables are undefined
+
+* Ensure `.env.local` exists in the project root.
+* Verify all required environment variables are configured.
+* Restart the development server after making changes.
+
+## Unable to connect to the API
+
+* Verify the Strapi Test Environment is running.
+* Confirm `NEXT_PUBLIC_STRAPI_URL` is correct.
+* Ensure `NEXT_PUBLIC_STRAPI_TOKEN` is valid and has the required API permissions.
+
+---
+
+# License
+
+This project is intended for internal use.

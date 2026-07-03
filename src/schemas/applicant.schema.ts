@@ -10,7 +10,7 @@ export const applicantSchema = z.object({
 		string,
 		...string[],
 	], {
-		error: "Application status is required",
+		error: "Applicant status is required",
 	}),
 	yearsOfExperience: z.number().nullable().optional(),
 	expectedSalary: z.number().nullable().optional(),

@@ -3,15 +3,10 @@
 import DateTimePicker from "@/components/shared/DateTimePicker"
 import MiniLoader from "@/components/shared/MiniLoader"
 import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { cn } from "@/lib/utils"
 import { InterviewFormValues, interviewSchema } from "@/schemas/interview.schema"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { format } from "date-fns"
-import { CalendarIcon } from "lucide-react"
 import { SubmitHandler, useForm } from "react-hook-form"
 
 interface CreateInterviewFormProps {

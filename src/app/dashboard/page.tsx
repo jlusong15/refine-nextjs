@@ -10,6 +10,7 @@ import { Interview } from "@/types/interview.types"
 import { useList } from "@refinedev/core"
 import dynamic from "next/dynamic"
 import DashboardStats from "./DashboardStats"
+import { formatDate } from "@/lib/format"
 
 const ApplicantStatusChart = dynamic(() => import("./ApplicantStatusChart"), {
 	loading: () => <Loading />,
@@ -24,13 +25,13 @@ const RecentApplicantsCard = dynamic(() => import("./RecentApplicantsCard"), {
 })
 
 export default function DashboardPage() {
+	const today = new Date()
 	const applicantsQuery = useList<Applicant>({
 		resource: RESOURCE_NAME.APPLICANTS,
 		pagination: {
 			mode: "off",
 		},
 	})
-
 	const interviewsQuery = useList<Interview>({
 		resource: RESOURCE_NAME.INTERVIEWS,
 		pagination: {
@@ -63,7 +64,7 @@ export default function DashboardPage() {
 		<DefaultPageLayout title="Dashboard">
 			<div className="flex flex-col gap-5">
 				<div>
-					<p className="text-muted-foreground">Welcome back! Here's an overview of your recruitment pipeline.</p>
+					<p className="text-muted-foreground">Welcome! Today is {formatDate(today)}!</p>
 				</div>
 
 				<DashboardStats applicants={applicants} interviews={interviews} />
