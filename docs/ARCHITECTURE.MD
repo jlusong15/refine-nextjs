@@ -20,7 +20,7 @@
 * **Environment Configuration** – The frontend connects to the shared test backend using environment variables, allowing the same application to be configured for different environments without code changes.
 
 ### Access Control Roles
-The application uses Refine's `accessControlProvider` to demonstrate role-based access control. The following mock roles and permissions are configured:
+The application uses Refine's `accessControlProvider` to demonstrate role-based access control. The following mock roles and permissions are configured from the database:
 
 | Role            | Permissions                  |
 | --------------- | ---------------------------- |

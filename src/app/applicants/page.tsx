@@ -57,6 +57,7 @@ export default function ApplicantsPage() {
 		},
 	})
 
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	useEffect(() => {
 		setFilters(
 			debouncedSearch
@@ -71,7 +72,7 @@ export default function ApplicantsPage() {
 			"replace",
 		)
 		setCurrentPage(1)
-	}, [debouncedSearch, setFilters, setCurrentPage])
+	}, [debouncedSearch])
 
 	if (isLoading) return <Loading />
 	if (error) return <ErrorPage title={PAGE_NAME.APPLICANTS} />
