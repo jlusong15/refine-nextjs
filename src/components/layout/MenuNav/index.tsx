@@ -32,7 +32,6 @@ export default function MenuNav() {
 						<div className="hidden sm:flex sm:space-x-2">
 							{NavLinks.map((item) => {
 								const isActive = pathname === item.route
-
 								return (
 									<LinkButton
 										key={item.name}
@@ -50,10 +49,10 @@ export default function MenuNav() {
 					</div>
 
 					{/* Desktop right */}
-					<div className="hidden sm:flex items-center gap-2 text-white">
+					{/* <div className="hidden sm:flex items-center gap-2 text-white">
 						<span className="text-sm whitespace-nowrap">View as:</span>
 						<ToggleViewer />
-					</div>
+					</div> */}
 				</div>
 			</div>
 

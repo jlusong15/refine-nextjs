@@ -5,6 +5,7 @@ export interface Interview extends BaseEntity {
 	role: string;
 	interviewDate: string;
 	interviewerName: string;
-	applicant: number | Applicant;
+	applicant?: Applicant;
 	description?: string;
+	applicantFullName?: string
 }

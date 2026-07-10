@@ -6,19 +6,36 @@ import { cn } from "@/lib/utils"
 import { ArrowUpDown } from "lucide-react"
 import { ReactNode } from "react"
 
+export type DataTableColumnKey<T> = Extract<keyof T, string> | string[]
 export interface DataTableColumn<T> {
-	key: keyof T
+	key: DataTableColumnKey<T>
 	title: string
 	sortable?: boolean
 	render?: (row: T) => ReactNode
 	className?: string
 }
 
+function getValue<T extends Record<string, any>>(item: T, key: DataTableColumnKey<T>): ReactNode {
+	let value: unknown
+
+	if (Array.isArray(key)) {
+		value = key.reduce((obj, part) => obj?.[part], item)
+	} else {
+		value = item[key]
+	}
+
+	if (value == null || typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
+		return value
+	}
+
+	return String(value)
+}
+
 interface DataTableProps<T extends { id: number | string }> {
 	data: T[]
 	columns: DataTableColumn<T>[]
 	isLoading?: boolean
-	onSort?: (field: keyof T) => void
+	onSort?: (key: DataTableColumnKey<T>) => void
 	actions?: (row: T) => ReactNode
 }
 
@@ -35,7 +52,10 @@ export function DataTable<T extends { id: number | string }>({
 				<TableHeader className="bg-muted">
 					<TableRow>
 						{columns.map((column) => (
-							<TableHead key={String(column.key)} className={cn("whitespace-nowrap", column.className)}>
+							<TableHead
+								key={Array.isArray(column.key) ? column.key.join("-") : column.key}
+								className={cn("whitespace-nowrap", column.className)}
+							>
 								{column.sortable ? (
 									<Button
 										variant="ghost"
@@ -59,8 +79,11 @@ export function DataTable<T extends { id: number | string }>({
 					{data.map((row) => (
 						<TableRow key={row.id}>
 							{columns.map((column) => (
-								<TableCell key={String(column.key)} className={cn("whitespace-nowrap", column.className)}>
-									{column.render ? column.render(row) : String(row[column.key] ?? "")}
+								<TableCell
+									key={Array.isArray(column.key) ? column.key.join("-") : column.key}
+									className={cn("whitespace-nowrap", column.className)}
+								>
+									{column.render ? column.render(row) : (getValue(row, column.key) ?? "")}
 								</TableCell>
 							))}
 
