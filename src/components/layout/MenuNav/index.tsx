@@ -3,10 +3,11 @@
 import LinkButton from "@/components/shared/LinkButton"
 import { NavLinks } from "@/types/nav.types"
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/react"
-import { Menu as MenuIcon, X } from "lucide-react"
+import { LogOut, Menu as MenuIcon, X } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import ToggleViewer from "./ToggleViewer"
+import { useLogout } from "@refinedev/core"
 
 function classNames(...classes: (string | undefined | null | false)[]) {
 	return classes.filter(Boolean).join(" ")
@@ -14,6 +15,7 @@ function classNames(...classes: (string | undefined | null | false)[]) {
 
 export default function MenuNav() {
 	const pathname = usePathname()
+	const { mutate: logout, isPending } = useLogout()
 
 	return (
 		<Disclosure as="nav" className="sticky top-0 z-50 bg-primary">
@@ -48,11 +50,20 @@ export default function MenuNav() {
 						</div>
 					</div>
 
-					{/* Desktop right */}
-					{/* <div className="hidden sm:flex items-center gap-2 text-white">
-						<span className="text-sm whitespace-nowrap">View as:</span>
-						<ToggleViewer />
-					</div> */}
+					<div className="hidden sm:flex items-center gap-2 text-white">
+						<LinkButton
+							href="#"
+							onClick={(e) => {
+								e.preventDefault()
+								logout()
+							}}
+							className="inline-flex items-center rounded-md px-3 py-2 text-xs font-medium text-white/50 hover:bg-white/20"
+							aria-disabled={isPending}
+						>
+							<LogOut className="h-4 w-4" />
+							Logout
+						</LinkButton>
+					</div>
 				</div>
 			</div>
 
