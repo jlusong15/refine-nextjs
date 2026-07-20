@@ -1,6 +1,6 @@
 ## Architecture
-* **Modular Architecture** – Built using Next.js App Router with a feature-based folder structure.
-* **Reusable Components** – UI is organized into reusable shared components and feature-specific modules.
+* **Modular Architecture** – Built using Next.js App Router with a typed-based folder structure.
+* **Reusable Components** – UI is organized into reusable shared components.
 * **Refine** – Handles routing, resource management, CRUD operations, and role-based access control through the `accessControlProvider`.
 * **Server State Management** – Managed by TanStack Query through Refine for efficient data fetching, caching, and synchronization.
 * **Global Client State** – Managed with Zustand to mock user authentication by allowing developers to toggle (View as) between authenticated and unauthenticated views during development.
