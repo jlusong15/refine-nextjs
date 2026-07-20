@@ -11,7 +11,7 @@ import MiniLoader from "@/components/shared/MiniLoader"
 import { Button } from "@/components/ui/button"
 import { ACCESS_ACTIONS } from "@/constants/access.constants"
 import { PAGE_NAME } from "@/constants/pages.constants"
-import { RESOURCE_NAME } from "@/constants/resource.constants"
+import { RESOURCE_CONFIG, RESOURCE_NAME } from "@/constants/resource.constants"
 import { useDebounce } from "@/hooks/useDebounce"
 import { Applicant } from "@/types/applicants.types"
 import { CanAccess, useDelete, useTable } from "@refinedev/core"
@@ -46,6 +46,9 @@ export default function ApplicantsPage() {
 		pagination: {
 			currentPage: 1,
 			pageSize: 10,
+		},
+		queryOptions: {
+			staleTime: RESOURCE_CONFIG.defaultStaleTime,
 		},
 		sorters: {
 			initial: [

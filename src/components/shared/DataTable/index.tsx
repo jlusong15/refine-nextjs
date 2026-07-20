@@ -9,6 +9,7 @@ import { ReactNode } from "react"
 export type DataTableColumnKey<T> = Extract<keyof T, string> | string[]
 export interface DataTableColumn<T> {
 	key: DataTableColumnKey<T>
+	sortKey?: Extract<keyof T, string>
 	title: string
 	sortable?: boolean
 	render?: (row: T) => ReactNode
@@ -35,7 +36,7 @@ interface DataTableProps<T extends { id: number | string }> {
 	data: T[]
 	columns: DataTableColumn<T>[]
 	isLoading?: boolean
-	onSort?: (key: DataTableColumnKey<T>) => void
+	onSort?: (key: Extract<keyof T, string>) => void
 	actions?: (row: T) => ReactNode
 }
 
@@ -61,7 +62,7 @@ export function DataTable<T extends { id: number | string }>({
 										variant="ghost"
 										className="h-auto p-0"
 										disabled={isLoading}
-										onClick={() => onSort?.(column.key)}
+										onClick={() => column.sortKey && onSort?.(column.sortKey)}
 									>
 										{column.title}
 										<ArrowUpDown className="ml-2 h-4 w-4" />
